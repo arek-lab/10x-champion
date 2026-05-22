@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Set-Clipboard *)",
+      "Skill(10x-bootstrapper)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(node *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git status *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Read",
+      "Edit",
+      "Write",
+      "PowerShell(New-Item *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\data\\\\_10xdev\\\\room_pilot\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\data\\\\_10xdev\\\\room_pilot\" -Force | Select-Object Name, @{Name=\"IsDirectory\"; Expression={$_.PSIsContainer}})",
+      "Bash(git -C \"C:\\\\data\\\\_10xdev\\\\room_pilot\" worktree list)",
+      "Bash(Get-Content \"C:\\\\data\\\\_10xdev\\\\room_pilot\\\\CLAUDE.md\" -Raw)",
+      "Bash(Select-Object -First 200)",
+      "PowerShell(\\(Get-Item \"C:\\\\data\\\\_10xdev\\\\room_pilot\\\\CLAUDE.md\"\\).Length; \\(Get-Content \"C:\\\\data\\\\_10xdev\\\\room_pilot\\\\CLAUDE.md\" | Measure-Object -Line\\).Lines)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)"
+    ],
+    "ask": [
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(git push *)",
+      "Bash(git push)"
+    ]
+  }
+}
