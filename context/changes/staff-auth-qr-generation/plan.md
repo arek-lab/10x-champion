@@ -276,22 +276,22 @@ No schema changes in this slice. All DB tables used here were created in F-01.
 
 #### Automated
 
-- [x] 2.1 Type checking passes: `npm run build`
-- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Type checking passes: `npm run build` — 72b7e97
+- [x] 2.2 Linting passes: `npm run lint` — 72b7e97
 
 #### Manual
 
-- [x] 2.3 POST with valid auth + valid body returns 200 with tokenValue UUID
-- [x] 2.4 New row appears in `guest_tokens` with correct `created_by`
-- [x] 2.5 POST without session cookie returns 401
-- [x] 2.6 POST with checkOutDate ≤ checkInDate returns 400
+- [x] 2.3 POST with valid auth + valid body returns 200 with tokenValue UUID — 72b7e97
+- [x] 2.4 New row appears in `guest_tokens` with correct `created_by` — 72b7e97
+- [x] 2.5 POST without session cookie returns 401 — 72b7e97
+- [x] 2.6 POST with checkOutDate ≤ checkInDate returns 400 — 72b7e97
 
 ### Phase 3: Generate Token Page and QR Display
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npm run build`
-- [ ] 3.2 Linting passes: `npm run lint`
+- [x] 3.1 Type checking passes: `npm run build`
+- [x] 3.2 Linting passes: `npm run lint`
 
 #### Manual
 

@@ -1,0 +1,23 @@
+---
+export const prerender = false;
+import StaffLayout from "@/layouts/StaffLayout.astro";
+import { createClient } from "@/lib/supabase";
+import TokenGeneratorForm from "@/components/staff/TokenGeneratorForm";
+
+// Auth handled by middleware — /dashboard/* is in PROTECTED_ROUTES
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+const [packagesResult, roomsResult] = supabase
+  ? await Promise.all([
+      supabase.from("packages").select("id, name").eq("active", true).order("name"),
+      supabase.from("room_qr_codes").select("id, room_number").eq("active", true).order("room_number"),
+    ])
+  : [{ data: null }, { data: null }];
+
+const packages = packagesResult.data ?? [];
+const rooms = roomsResult.data ?? [];
+---
+
+<StaffLayout title="Generate Guest Token">
+  <TokenGeneratorForm packages={packages} rooms={rooms} client:load />
+</StaffLayout>
