@@ -290,15 +290,15 @@ No schema changes in this slice. All DB tables used here were created in F-01.
 
 #### Automated
 
-- [x] 3.1 Type checking passes: `npm run build`
-- [x] 3.2 Linting passes: `npm run lint`
+- [x] 3.1 Type checking passes: `npm run build` — 8548447
+- [x] 3.2 Linting passes: `npm run lint` — 8548447
 
 #### Manual
 
-- [ ] 3.3 Unauthenticated access to `/dashboard/generate-token` redirects to `/auth/signin`
-- [ ] 3.4 Form shows room dropdown (10 rooms) and package dropdown (3 packages)
-- [ ] 3.5 Valid submission switches to QR view with correct guest summary
-- [ ] 3.6 QR encodes `<origin>/guest/verify?token=<uuid>`
-- [ ] 3.7 "Generate Another" resets form to blank
-- [ ] 3.8 Print Preview shows QR + summary; nav is hidden
-- [ ] 3.9 Invalid date range shows client-side error without network request
+- [x] 3.3 Unauthenticated access to `/dashboard/generate-token` redirects to `/auth/signin` — 8548447
+- [x] 3.4 Form shows room dropdown (10 rooms) and package dropdown (3 packages) — 8548447
+- [x] 3.5 Valid submission switches to QR view with correct guest summary — 8548447
+- [x] 3.6 QR encodes `<origin>/guest/verify?token=<uuid>` — 8548447
+- [x] 3.7 "Generate Another" resets form to blank — 8548447
+- [x] 3.8 Print Preview shows QR + summary; nav is hidden — 8548447
+- [x] 3.9 Invalid date range shows client-side error without network request — 8548447
