@@ -3,7 +3,7 @@ project: RoomPilot
 version: 1
 status: draft
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-28
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -29,7 +29,7 @@ Goście hotelowi tracą czas na recepcji z dwóch połączonych przyczyn: nie wi
 
 | ID   | Change ID                | Outcome (personel/gość może …)                                          | Prerequisites  | PRD refs                                                              | Status   |
 |------|--------------------------|-------------------------------------------------------------------------|----------------|-----------------------------------------------------------------------|----------|
-| F-01 | db-schema-supabase       | (foundation) tabele, RLS i dane startowe gotowe w Supabase              | —              | FR-001, FR-004, FR-006, FR-007, FR-008, FR-009, FR-012, FR-013, §Access Control | ready    |
+| F-01 | db-schema-supabase       | (foundation) tabele, RLS i dane startowe gotowe w Supabase              | —              | FR-001, FR-004, FR-006, FR-007, FR-008, FR-009, FR-012, FR-013, §Access Control | done     |
 | S-01 | staff-auth-qr-generation | logować się i generować/pobrać token QR gościa                          | F-01           | FR-001, FR-004, FR-005, FR-014                                        | proposed |
 | S-02 | guest-qr-auth-panel      | uzyskać dostęp przez dwuetapowy QR i zobaczyć panel usług z dashboardem | S-01, F-01     | FR-002, FR-003, FR-004, FR-006, FR-007, FR-010, US-01                 | proposed |
 | S-03 | guest-order-addon        | zamówić add-on i anulować go inline; recepcja dostaje e-mail w ≤60s     | S-02, F-01     | FR-008, FR-009, US-02                                                 | proposed |
@@ -70,7 +70,7 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 - **Blockers:** —
 - **Unknowns:** Jak generowane/zarządzane są fizyczne QR kody w pokojach — statyczny URL per numer pokoju (np. `/qr/room/101`) czy osobna tabela dynamicznych kodów? Owner: user. Block: no (można przyjąć statyczny URL per numer pokoju jako domyślne rozwiązanie MVP).
 - **Risk:** Schemat musi obsłużyć tokenizację gościa bez kont Supabase Auth po stronie gościa — niestandardowe podejście do RLS; błędnie zaprojektowane polityki zablokują wszystkie kolejne slice'y i będą trudne do refaktoryzacji pod presją czasu.
-- **Status:** ready
+- **Status:** done
 
 ## Slices
 
@@ -163,4 +163,4 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 
 ## Done
 
-(Empty on first generation. `/10x-archive` appends an entry here — and flips that item's `Status` to `done` — when a change whose `Change ID` matches the item is archived.)
+- **F-01: (foundation) tabele, RLS i dane startowe gotowe w Supabase** — Archived 2026-05-28 → `context/archive/2026-05-28-db-schema-supabase/`. Lesson: —.
