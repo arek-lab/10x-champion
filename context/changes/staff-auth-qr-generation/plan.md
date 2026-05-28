@@ -263,28 +263,28 @@ No schema changes in this slice. All DB tables used here were created in F-01.
 
 #### Automated
 
-- [x] 1.1 Type checking passes: `npm run build`
-- [x] 1.2 Linting passes: `npm run lint`
+- [x] 1.1 Type checking passes: `npm run build` — 491e3b4
+- [x] 1.2 Linting passes: `npm run lint` — 491e3b4
 
 #### Manual
 
-- [ ] 1.3 `/dashboard` shows staff nav header with "Generate Token" link and Sign Out button
-- [ ] 1.4 Clicking Sign Out still works
-- [ ] 1.5 Browser Print Preview on `/dashboard` shows nav hidden
+- [x] 1.3 `/dashboard` shows staff nav header with "Generate Token" link and Sign Out button — 491e3b4
+- [x] 1.4 Clicking Sign Out still works — 491e3b4
+- [x] 1.5 Browser Print Preview on `/dashboard` shows nav hidden — 491e3b4
 
 ### Phase 2: Token Generation API Endpoint
 
 #### Automated
 
-- [ ] 2.1 Type checking passes: `npm run build`
-- [ ] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Type checking passes: `npm run build`
+- [x] 2.2 Linting passes: `npm run lint`
 
 #### Manual
 
-- [ ] 2.3 POST with valid auth + valid body returns 200 with tokenValue UUID
-- [ ] 2.4 New row appears in `guest_tokens` with correct `created_by`
-- [ ] 2.5 POST without session cookie returns 401
-- [ ] 2.6 POST with checkOutDate ≤ checkInDate returns 400
+- [x] 2.3 POST with valid auth + valid body returns 200 with tokenValue UUID
+- [x] 2.4 New row appears in `guest_tokens` with correct `created_by`
+- [x] 2.5 POST without session cookie returns 401
+- [x] 2.6 POST with checkOutDate ≤ checkInDate returns 400
 
 ### Phase 3: Generate Token Page and QR Display
 
