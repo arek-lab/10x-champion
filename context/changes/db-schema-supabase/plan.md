@@ -416,31 +416,31 @@ All indexes are created in Phase 1. The key query patterns for MVP (orders by to
 
 #### Automated
 
-- [x] 1.1 Migrations apply cleanly: `npx supabase db push` exits 0
-- [x] 1.2 Migration count: `npx supabase migration list` shows exactly 2 applied migrations
-- [x] 1.3 Build still passes: `npm run build`
-- [x] 1.4 Lint passes: `npm run lint`
+- [x] 1.1 Migrations apply cleanly: `npx supabase db push` exits 0 — 307b7e4
+- [x] 1.2 Migration count: `npx supabase migration list` shows exactly 2 applied migrations — 307b7e4
+- [x] 1.3 Build still passes: `npm run build` — 307b7e4
+- [x] 1.4 Lint passes: `npm run lint` — 307b7e4
 
 #### Manual
 
-- [x] 1.5 All 6 tables visible in Supabase dashboard → Table Editor
-- [x] 1.6 RLS enabled on all 6 tables (Authentication → Policies shows "RLS enabled" per table)
-- [x] 1.7 `orders` has 2 policies (staff read + staff update), all other tables have 1 policy each
-- [x] 1.8 `package_services` UNIQUE constraint visible in Studio → Database → Tables → Constraints
+- [x] 1.5 All 6 tables visible in Supabase dashboard → Table Editor — 307b7e4
+- [x] 1.6 RLS enabled on all 6 tables (Authentication → Policies shows "RLS enabled" per table) — 307b7e4
+- [x] 1.7 `orders` has 2 policies (staff read + staff update), all other tables have 1 policy each — 307b7e4
+- [x] 1.8 `package_services` UNIQUE constraint visible in Studio → Database → Tables → Constraints — 307b7e4
 
 ### Phase 2: Seed Data
 
 #### Automated
 
-- [ ] 2.1 Seed migration applies: `npx supabase db push` exits 0
-- [ ] 2.2 `npx supabase migration list` shows exactly 3 applied migrations
-- [ ] 2.3 Row counts correct: 8 services, 3 packages, 10 room_qr_codes, 19 package_services
+- [x] 2.1 Seed migration applies: `npx supabase db push` exits 0
+- [x] 2.2 `npx supabase migration list` shows exactly 3 applied migrations
+- [x] 2.3 Row counts correct: 8 services, 3 packages, 10 room_qr_codes, 19 package_services
 
 #### Manual
 
-- [ ] 2.4 All 8 services visible in Studio Table Editor with correct names and categories
-- [ ] 2.5 Package "Premium" has 6 included services and 2 addon services in package_services
-- [ ] 2.6 Room QR codes for rooms 101–110 present with unique non-null qr_token values
+- [x] 2.4 All 8 services visible in Studio Table Editor with correct names and categories
+- [x] 2.5 Package "Premium" has 6 included services and 2 addon services in package_services
+- [x] 2.6 Room QR codes for rooms 101–110 present with unique non-null qr_token values
 
 ### Phase 3: TypeScript Types + Environment Contract
 
