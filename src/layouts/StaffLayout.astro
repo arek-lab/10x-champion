@@ -1,0 +1,35 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+  <div class="bg-cosmic min-h-screen">
+    <nav
+      class="flex items-center justify-between border-b border-white/10 bg-black/20 px-6 py-4 backdrop-blur-sm print:hidden"
+    >
+      <span class="text-lg font-bold text-white">RoomPilot</span>
+      <div class="flex items-center gap-4">
+        <a href="/dashboard/generate-token" class="text-sm text-blue-200 transition-colors hover:text-white">
+          Generate Token
+        </a>
+        <form method="POST" action="/api/auth/signout">
+          <button
+            type="submit"
+            class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm text-white transition-colors hover:bg-white/20"
+          >
+            Sign Out
+          </button>
+        </form>
+      </div>
+    </nav>
+    <main>
+      <slot />
+    </main>
+  </div>
+</Layout>
