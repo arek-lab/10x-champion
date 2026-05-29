@@ -1,7 +1,7 @@
 ---
 change_id: guest-qr-auth-panel
 title: Guest two-step QR access and service panel
-status: impl_reviewed
+status: implemented
 created: 2026-05-29
 updated: 2026-05-29
 archived_at: null

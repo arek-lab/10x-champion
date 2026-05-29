@@ -284,17 +284,17 @@ Build `GuestLayout.astro` and `/guest/panel.astro`. The panel queries the guest'
 
 #### Automated
 
-- [x] 3.1 Type checking passes: `npm run typecheck`
-- [x] 3.2 Linting passes: `npm run lint`
-- [x] 3.3 Build succeeds: `npm run build`
+- [x] 3.1 Type checking passes: `npm run typecheck` — 7a7a19d
+- [x] 3.2 Linting passes: `npm run lint` — 7a7a19d
+- [x] 3.3 Build succeeds: `npm run build` — 7a7a19d
 
 #### Manual
 
-- [x] 3.4 Full two-step QR flow completes and lands on panel
-- [x] 3.5 Panel header shows correct room number, guest name, and check-out date
-- [x] 3.6 "Included" section lists correct services with ✓ badges
-- [x] 3.7 "Add-ons" section lists correct add-on services
-- [x] 3.8 Manually inserted order shows correct status badge on reload
-- [x] 3.9 No regressions in staff login, dashboard, QR generation
-- [x] 3.10 Expired token redirects to `/guest/error?reason=expired`
-- [x] 3.11 Missing `guest_session` cookie redirects to `/guest/error?reason=invalid`
+- [x] 3.4 Full two-step QR flow completes and lands on panel — 7a7a19d
+- [x] 3.5 Panel header shows correct room number, guest name, and check-out date — 7a7a19d
+- [x] 3.6 "Included" section lists correct services with ✓ badges — 7a7a19d
+- [x] 3.7 "Add-ons" section lists correct add-on services — 7a7a19d
+- [x] 3.8 Manually inserted order shows correct status badge on reload — 7a7a19d
+- [x] 3.9 No regressions in staff login, dashboard, QR generation — 7a7a19d
+- [x] 3.10 Expired token redirects to `/guest/error?reason=expired` — 7a7a19d
+- [x] 3.11 Missing `guest_session` cookie redirects to `/guest/error?reason=invalid` — 7a7a19d
