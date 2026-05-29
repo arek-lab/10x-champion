@@ -98,7 +98,7 @@ Add the `createServiceRoleClient()` helper, implement `/guest/verify` (the landi
 2. Read `Astro.url.searchParams.get("token")`. If missing or not a valid UUID format → render "invalid" inline error view.
 3. Query `guest_tokens WHERE token_value = $token` using service role client. If no row → render "invalid" inline error (do not distinguish "not found" from other failures — avoids UUID enumeration).
 4. If `check_out_date < today (UTC date string comparison)` → render "expired" inline error.
-5. Issue `pending_guest` JWT (payload: `{ tokenId: row.id, type: "pending_guest" }`; exp: 10 min) signed with `GUEST_SESSION_SECRET`; set cookie `pending_guest` (httpOnly, secure, sameSite: "lax", path: "/", maxAge: 600).
+5. Issue `pending_guest` JWT (payload: `{ tokenId: row.id, type: "pending_guest" }`; exp: 10 min) signed with `GUEST_SESSION_SECRET`; set cookie `pending_guest` (httpOnly, secure, sameSite: "lax", path: "/qr", maxAge: 600). **Note**: path is `/qr` (not `/`) — scopes the cookie to the QR flow only (least-privilege). The room QR page lives under `/qr/room/…` and must clear the cookie at the same path.
 6. Render instruction screen: "Step 2 of 2 — Scan the QR code in your room to complete access."
 
 ### Success Criteria
@@ -158,6 +158,15 @@ Implement `/qr/room/[qr_token]` — the page encoded in the physical room QR. Va
 - Visiting `/qr/room/<valid-qr_token>` when already authenticated (`guest_session` present) redirects silently to `/guest/panel`
 
 **Implementation Note**: After completing this phase and all automated verification passes, pause here for manual confirmation from the human that the manual testing was successful before proceeding to the next phase.
+
+### Phase 2 Addendum — unplanned verify.astro changes (commit 3e30cf3)
+
+During Phase 2 implementation, `src/pages/guest/verify.astro` was also patched with the following improvements not in the original plan:
+- `service_error` view type added — shown when `createServiceRoleClient()` returns null or the DB query returns an error.
+- DB error handling added: `{ data: row, error: dbError }` destructured; `view = "service_error"` on truthy dbError.
+- `GUEST_SESSION_SECRET ?? ""` replaced with conditional `else if (GUEST_SESSION_SECRET)` — avoids signing with an empty secret.
+
+These are robustness improvements that arose naturally while implementing Phase 2. They do not affect Phase 3 planning.
 
 ---
 
@@ -255,37 +264,37 @@ Build `GuestLayout.astro` and `/guest/panel.astro`. The panel queries the guest'
 - [x] 1.3 Valid token renders instruction screen and sets `pending_guest` cookie — d3a71ea
 - [x] 1.4 Expired token renders expired message inline — d3a71ea
 - [x] 1.5 Missing/invalid token renders generic invalid message inline — d3a71ea
-- [x] 1.6 Already-authenticated guest redirects to `/guest/panel`
+- [x] 1.6 Already-authenticated guest redirects to `/guest/panel` — 3e30cf3
 
 ### Phase 2: Room QR Verification and Session Issuance
 
 #### Automated
 
-- [x] 2.1 Type checking passes: `npm run typecheck`
-- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 Type checking passes: `npm run typecheck` — 3e30cf3
+- [x] 2.2 Linting passes: `npm run lint` — 3e30cf3
 
 #### Manual
 
-- [x] 2.3 Valid room QR + matching pending cookie → `guest_session` cookie set, redirect to panel
-- [x] 2.4 Valid room QR + no pending cookie → redirect to `/guest/error?reason=invalid`
-- [x] 2.5 Valid room QR + pending cookie for different room → redirect to `/guest/error?reason=invalid`
-- [x] 2.6 Already-authenticated guest visiting room QR → silent redirect to panel
+- [x] 2.3 Valid room QR + matching pending cookie → `guest_session` cookie set, redirect to panel — 3e30cf3
+- [x] 2.4 Valid room QR + no pending cookie → redirect to `/guest/error?reason=invalid` — 3e30cf3
+- [x] 2.5 Valid room QR + pending cookie for different room → redirect to `/guest/error?reason=invalid` — 3e30cf3
+- [x] 2.6 Already-authenticated guest visiting room QR → silent redirect to panel — 3e30cf3
 
 ### Phase 3: Guest Panel
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npm run typecheck`
-- [ ] 3.2 Linting passes: `npm run lint`
-- [ ] 3.3 Build succeeds: `npm run build`
+- [x] 3.1 Type checking passes: `npm run typecheck`
+- [x] 3.2 Linting passes: `npm run lint`
+- [x] 3.3 Build succeeds: `npm run build`
 
 #### Manual
 
-- [ ] 3.4 Full two-step QR flow completes and lands on panel
-- [ ] 3.5 Panel header shows correct room number, guest name, and check-out date
-- [ ] 3.6 "Included" section lists correct services with ✓ badges
-- [ ] 3.7 "Add-ons" section lists correct add-on services
-- [ ] 3.8 Manually inserted order shows correct status badge on reload
-- [ ] 3.9 No regressions in staff login, dashboard, QR generation
-- [ ] 3.10 Expired token redirects to `/guest/error?reason=expired`
-- [ ] 3.11 Missing `guest_session` cookie redirects to `/guest/error?reason=invalid`
+- [x] 3.4 Full two-step QR flow completes and lands on panel
+- [x] 3.5 Panel header shows correct room number, guest name, and check-out date
+- [x] 3.6 "Included" section lists correct services with ✓ badges
+- [x] 3.7 "Add-ons" section lists correct add-on services
+- [x] 3.8 Manually inserted order shows correct status badge on reload
+- [x] 3.9 No regressions in staff login, dashboard, QR generation
+- [x] 3.10 Expired token redirects to `/guest/error?reason=expired`
+- [x] 3.11 Missing `guest_session` cookie redirects to `/guest/error?reason=invalid`

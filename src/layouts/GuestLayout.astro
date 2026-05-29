@@ -1,0 +1,37 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+interface Props {
+  roomNumber: string;
+  guestName: string;
+  checkOutDate: string;
+}
+
+const { roomNumber, guestName, checkOutDate } = Astro.props;
+
+const formattedCheckOut = new Date(checkOutDate + "T00:00:00Z").toLocaleDateString("en-GB", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+---
+
+<Layout title={`Room ${roomNumber} — Guest Panel`}>
+  <div class="min-h-screen bg-gray-50">
+    <header class="border-b border-gray-200 bg-white px-6 py-4">
+      <div class="mx-auto flex max-w-2xl items-center justify-between">
+        <div>
+          <span class="text-2xl font-bold text-gray-900">Room {roomNumber}</span>
+        </div>
+        <div class="text-right text-sm text-gray-600">
+          <div class="font-medium text-gray-800">{guestName}</div>
+          <div>Check-out: {formattedCheckOut}</div>
+        </div>
+      </div>
+    </header>
+    <main class="mx-auto max-w-2xl px-6 py-8">
+      <slot />
+    </main>
+  </div>
+</Layout>

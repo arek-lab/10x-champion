@@ -1,0 +1,114 @@
+---
+export const prerender = false;
+import GuestLayout from "@/layouts/GuestLayout.astro";
+import { createServiceRoleClient } from "@/lib/supabase";
+
+if (!Astro.locals.guestToken) {
+  return Astro.redirect("/guest/error?reason=invalid", 302);
+}
+
+const { tokenId, packageId } = Astro.locals.guestToken;
+
+const supabase = createServiceRoleClient();
+if (!supabase) {
+  return Astro.redirect("/guest/error?reason=invalid", 302);
+}
+
+const { data: guestTokenRow, error: tokenError } = await supabase
+  .from("guest_tokens")
+  .select("id, guest_name, room_number, check_out_date")
+  .eq("id", tokenId)
+  .maybeSingle();
+
+if (tokenError || !guestTokenRow) {
+  return Astro.redirect("/guest/error?reason=invalid", 302);
+}
+
+const today = new Date().toISOString().slice(0, 10);
+if (guestTokenRow.check_out_date < today) {
+  return Astro.redirect("/guest/error?reason=expired", 302);
+}
+
+const { data: packageServicesRows } = await supabase
+  .from("package_services")
+  .select("inclusion_type, service_id, services(id, name, description, active)")
+  .eq("package_id", packageId);
+
+const rows = packageServicesRows ?? [];
+
+const included = rows.filter((r) => r.inclusion_type === "included" && r.services.active).map((r) => r.services);
+
+const addons = rows.filter((r) => r.inclusion_type === "addon" && r.services.active).map((r) => r.services);
+
+const { data: ordersRows } = await supabase.from("orders").select("service_id, status").eq("guest_token_id", tokenId);
+
+const orderMap: Record<string, string> = {};
+for (const order of ordersRows ?? []) {
+  orderMap[order.service_id] = order.status;
+}
+
+const { guest_name, room_number, check_out_date } = guestTokenRow;
+---
+
+<GuestLayout roomNumber={room_number} guestName={guest_name} checkOutDate={check_out_date}>
+  <section class="mb-8">
+    <h2 class="mb-4 text-lg font-semibold text-gray-900">Included in your package</h2>
+    {
+      included.length === 0 ? (
+        <p class="text-sm text-gray-500">No included services found for your package.</p>
+      ) : (
+        <ul class="space-y-3">
+          {included.map((service) => (
+            <li class="flex items-start gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700">
+                ✓
+              </span>
+              <div>
+                <p class="font-medium text-gray-900">{service.name}</p>
+                {service.description && <p class="text-sm text-gray-500">{service.description}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+
+  <section>
+    <h2 class="mb-4 text-lg font-semibold text-gray-900">Available add-ons</h2>
+    {
+      addons.length === 0 ? (
+        <p class="text-sm text-gray-500">No add-ons available for your package.</p>
+      ) : (
+        <ul class="space-y-3">
+          {addons.map((service) => {
+            const status = orderMap[service.id];
+            return (
+              <li class="flex items-start justify-between gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+                <div>
+                  <p class="font-medium text-gray-900">{service.name}</p>
+                  {service.description && <p class="text-sm text-gray-500">{service.description}</p>}
+                </div>
+                {status === "pending" && (
+                  <span class="shrink-0 rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                    ⏳ Pending
+                  </span>
+                )}
+                {status === "fulfilled" && (
+                  <span class="shrink-0 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                    ✓ Fulfilled
+                  </span>
+                )}
+                {status === "cancelled" && (
+                  <span class="shrink-0 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
+                    ✕ Cancelled
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+  </section>
+</GuestLayout>

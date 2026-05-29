@@ -27,27 +27,34 @@ try {
 } catch {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
+if (pendingPayload.type !== "pending_guest") {
+  return Astro.redirect("/guest/error?reason=invalid", 302);
+}
 
 const supabase = createServiceRoleClient();
 if (!supabase) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
 
-const { data: room } = await supabase
+const { data: room, error: roomError } = await supabase
   .from("room_qr_codes")
   .select("room_number")
   .eq("qr_token", qr_token)
   .maybeSingle();
 
-if (!room) {
+if (roomError || !room) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
 
-const { data: guestToken } = await supabase
+const { data: guestToken, error: tokenError } = await supabase
   .from("guest_tokens")
   .select("id, room_number, package_id, check_out_date")
   .eq("id", pendingPayload.tokenId)
   .maybeSingle();
+
+if (tokenError) {
+  return Astro.redirect("/guest/error?reason=invalid", 302);
+}
 
 if (guestToken?.room_number !== room.room_number) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
