@@ -52,11 +52,11 @@ const { data: guestToken, error: tokenError } = await supabase
   .eq("id", pendingPayload.tokenId)
   .maybeSingle();
 
-if (tokenError) {
+if (tokenError || !guestToken) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
 
-if (guestToken?.room_number !== room.room_number) {
+if (guestToken.room_number !== room.room_number) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
 

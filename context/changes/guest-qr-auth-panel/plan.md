@@ -105,7 +105,7 @@ Add the `createServiceRoleClient()` helper, implement `/guest/verify` (the landi
 
 #### Automated Verification
 
-- Type checking passes: `npm run typecheck`
+- Type checking passes: `npx astro check`
 - Linting passes: `npm run lint`
 
 #### Manual Verification
@@ -147,7 +147,7 @@ Implement `/qr/room/[qr_token]` — the page encoded in the physical room QR. Va
 
 #### Automated Verification
 
-- Type checking passes: `npm run typecheck`
+- Type checking passes: `npx astro check`
 - Linting passes: `npm run lint`
 
 #### Manual Verification
@@ -167,6 +167,15 @@ During Phase 2 implementation, `src/pages/guest/verify.astro` was also patched w
 - `GUEST_SESSION_SECRET ?? ""` replaced with conditional `else if (GUEST_SESSION_SECRET)` — avoids signing with an empty secret.
 
 These are robustness improvements that arose naturally while implementing Phase 2. They do not affect Phase 3 planning.
+
+### Phase 3 Addendum — unplanned [qr_token].astro changes (commit 7a7a19d)
+
+During Phase 3 implementation, `src/pages/qr/room/[qr_token].astro` (Phase 2 deliverable) was also patched with the following improvements not in the original Phase 3 plan:
+- `pendingPayload.type !== "pending_guest"` guard added — closes JWT type confusion (the same secret signs both `pending_guest` and `guest_session`; this ensures a `guest_session` cookie cannot be replayed as a `pending_guest` cookie).
+- `error: roomError` destructured from the `room_qr_codes` query; redirect fires on truthy error — makes DB failures explicit rather than falling through with a null room.
+- `error: tokenError` destructured from the `guest_tokens` query; redirect fires on truthy error — same pattern as the room query.
+
+These are robustness improvements that close error-handling gaps left in Phase 2. They do not affect Phase 3 functionality.
 
 ---
 
@@ -205,7 +214,7 @@ Build `GuestLayout.astro` and `/guest/panel.astro`. The panel queries the guest'
 
 #### Automated Verification
 
-- Type checking passes: `npm run typecheck`
+- Type checking passes: `npx astro check`
 - Linting passes: `npm run lint`
 - Build succeeds: `npm run build`
 

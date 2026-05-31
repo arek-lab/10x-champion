@@ -29,16 +29,21 @@ if (guestTokenRow.check_out_date < today) {
   return Astro.redirect("/guest/error?reason=expired", 302);
 }
 
-const { data: packageServicesRows } = await supabase
+const { data: packageServicesRows, error: pkgError } = await supabase
   .from("package_services")
   .select("inclusion_type, service_id, services(id, name, description, active)")
-  .eq("package_id", packageId);
+  .eq("package_id", packageId)
+  .eq("services.active", true);
 
-const rows = packageServicesRows ?? [];
+if (pkgError) {
+  return Astro.redirect("/guest/error?reason=invalid", 302);
+}
 
-const included = rows.filter((r) => r.inclusion_type === "included" && r.services.active).map((r) => r.services);
+const rows = packageServicesRows;
 
-const addons = rows.filter((r) => r.inclusion_type === "addon" && r.services.active).map((r) => r.services);
+const included = rows.filter((r) => r.inclusion_type === "included").map((r) => r.services);
+
+const addons = rows.filter((r) => r.inclusion_type === "addon").map((r) => r.services);
 
 const { data: ordersRows } = await supabase.from("orders").select("service_id, status").eq("guest_token_id", tokenId);
 

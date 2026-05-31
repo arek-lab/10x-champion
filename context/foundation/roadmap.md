@@ -131,7 +131,7 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 - **Parallel with:** S-03, S-04
 - **Blockers:** —
 - **Unknowns:** Jak dostarczony jest kontekst hotelowy do AI concierge — hardcoded system prompt, plik JSON config, czy inne źródło? Owner: user. Block: no (PRD §Open Questions #2: można zacząć od hardcoded prompt z danymi pilotażowego hotelu).
-- **Risk:** Jakość odpowiedzi zależy całkowicie od jakości danych hotelowych w prompcie; odpowiedź generyczna to failure wg PRD NFR. Anthropic SDK na Workers — dodatkowy narzut CPU (Workers Paid mandatory per `context/foundation/infrastructure.md`).
+- **Risk:** Jakość odpowiedzi zależy całkowicie od jakości danych hotelowych w prompcie; odpowiedź generyczna to failure wg PRD NFR. OpenAI SDK na Workers — dodatkowy narzut CPU (Workers Paid mandatory per `context/foundation/infrastructure.md`).
 - **Status:** proposed
 
 ## Backlog Handoff
