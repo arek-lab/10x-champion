@@ -320,9 +320,9 @@ No new migrations. All required schema changes (orders table, RLS policies, inde
 
 #### Automated
 
-- [x] 2.1 `npx tsc --noEmit` passes
-- [x] 2.2 `npm run lint` passes
-- [x] 2.3 `npm run build` passes
+- [x] 2.1 `npx tsc --noEmit` passes — ab6de28
+- [x] 2.2 `npm run lint` passes — ab6de28
+- [x] 2.3 `npm run build` passes — ab6de28
 
 #### Manual
 
@@ -336,9 +336,9 @@ No new migrations. All required schema changes (orders table, RLS policies, inde
 
 #### Automated
 
-- [ ] 3.1 `npm run build` passes
-- [ ] 3.2 `npm run lint` passes
-- [ ] 3.3 `npx tsc --noEmit` passes
+- [x] 3.1 `npm run build` passes
+- [x] 3.2 `npm run lint` passes
+- [x] 3.3 `npx tsc --noEmit` passes
 
 #### Manual
 

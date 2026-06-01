@@ -28,13 +28,15 @@ if (supabase) {
         </a>
         <a href="/dashboard" class="flex items-center gap-1.5 text-sm text-blue-200 transition-colors hover:text-white">
           Orders
-          {
-            pendingCount > 0 && (
-              <span class="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">
-                {pendingCount}
-              </span>
-            )
-          }
+          <span
+            id="pending-badge"
+            class:list={[
+              "flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white",
+              { hidden: pendingCount === 0 },
+            ]}
+          >
+            {pendingCount}
+          </span>
         </a>
         <form method="POST" action="/api/auth/signout">
           <button
@@ -50,4 +52,13 @@ if (supabase) {
       <slot />
     </main>
   </div>
+  <script>
+    window.addEventListener("pending-count-update", (e) => {
+      const badge = document.getElementById("pending-badge");
+      if (!badge) return;
+      const count = (e as CustomEvent<number>).detail;
+      badge.textContent = String(count);
+      badge.classList.toggle("hidden", count === 0);
+    });
+  </script>
 </Layout>
