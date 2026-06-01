@@ -1,11 +1,19 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { createClient } from "@/lib/supabase";
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+let pendingCount = 0;
+if (supabase) {
+  const { count } = await supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "pending");
+  pendingCount = count ?? 0;
+}
 ---
 
 <Layout title={title}>
@@ -17,6 +25,16 @@ const { title } = Astro.props;
       <div class="flex items-center gap-4">
         <a href="/dashboard/generate-token" class="text-sm text-blue-200 transition-colors hover:text-white">
           Generate Token
+        </a>
+        <a href="/dashboard" class="flex items-center gap-1.5 text-sm text-blue-200 transition-colors hover:text-white">
+          Orders
+          {
+            pendingCount > 0 && (
+              <span class="flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">
+                {pendingCount}
+              </span>
+            )
+          }
         </a>
         <form method="POST" action="/api/auth/signout">
           <button

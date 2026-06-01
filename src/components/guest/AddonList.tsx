@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Addon {
   id: string;
@@ -78,30 +78,6 @@ export default function AddonList({ addons, initialOrders }: Props) {
       setLoading((prev) => ({ ...prev, [serviceId]: false }));
     }
   };
-
-  const hasPending = Object.values(orders).some((o) => o?.status === "pending");
-
-  useEffect(() => {
-    if (!hasPending) return;
-
-    const poll = async () => {
-      try {
-        const res = await fetch("/api/guest/orders");
-        if (!res.ok) return;
-        const rows = (await res.json()) as OrderRecord[];
-        setOrders(buildInitialOrders(rows));
-      } catch {
-        // silently ignore poll errors
-      }
-    };
-
-    const id = setInterval(() => {
-      void poll();
-    }, 20_000);
-    return () => {
-      clearInterval(id);
-    };
-  }, [hasPending]);
 
   if (addons.length === 0) {
     return <p className="text-sm text-gray-500">No add-ons available for your package.</p>;
