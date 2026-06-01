@@ -10,6 +10,31 @@ const bodySchema = z.object({
   serviceId: z.string().regex(uuidPattern, "serviceId must be a valid UUID"),
 });
 
+export const GET: APIRoute = async (context) => {
+  const guestToken = context.locals.guestToken;
+  if (!guestToken) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { tokenId } = guestToken;
+  const supabase = createServiceRoleClient();
+  if (!supabase) {
+    return Response.json({ error: "Service unavailable" }, { status: 500 });
+  }
+
+  const { data: rows, error } = await supabase
+    .from("orders")
+    .select("id, service_id, status, created_at")
+    .eq("guest_token_id", tokenId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    return Response.json({ error: "Failed to fetch orders" }, { status: 500 });
+  }
+
+  return Response.json(rows ?? []);
+};
+
 export const POST: APIRoute = async (context) => {
   const guestToken = context.locals.guestToken;
   if (!guestToken) {

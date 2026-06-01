@@ -260,8 +260,8 @@ The `StaffLayout.astro` count query runs on every staff page load. For MVP with 
 
 #### Automated
 
-- [x] 1.1 Type checking passes: `npx astro check`
-- [x] 1.2 Linting passes: `npm run lint`
+- [x] 1.1 Type checking passes: `npx astro check` — ac54dd2
+- [x] 1.2 Linting passes: `npm run lint` — ac54dd2
 
 #### Manual
 
@@ -276,9 +276,9 @@ The `StaffLayout.astro` count query runs on every staff page load. For MVP with 
 
 #### Automated
 
-- [ ] 2.1 Type checking passes: `npx astro check`
-- [ ] 2.2 Linting passes: `npm run lint`
-- [ ] 2.3 Build succeeds: `npm run build`
+- [x] 2.1 Type checking passes: `npx astro check`
+- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.3 Build succeeds: `npm run build`
 
 #### Manual
 
