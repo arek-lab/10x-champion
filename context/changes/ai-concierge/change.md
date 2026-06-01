@@ -1,7 +1,7 @@
 ---
 change_id: ai-concierge
 title: AI concierge — domain-specific hotel recommendations for guests
-status: implementing
+status: implemented
 created: 2026-06-01
 updated: 2026-06-01
 
