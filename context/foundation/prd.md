@@ -35,7 +35,7 @@ Pracownik recepcji, który generuje tokeny dostępowe dla gości oraz monitoruje
 
 ### Primary
 - Gość przechodzi przez dwuetapową weryfikację QR (token z recepcji → skan QR w pokoju) bez pomocy personelu i uzyskuje dostęp do panelu.
-- Gość składa zamówienie na usługę płatną, a recepcja otrzymuje potwierdzenie (e-mail + wpis w panelu) w ciągu 60 sekund.
+- Gość składa zamówienie na usługę płatną, a recepcja widzi je w panelu (licznik + karta) w ciągu 60 sekund; gość widzi aktualizację statusu bez ręcznego odświeżania (polling co 20s).
 - Recepcja generuje token QR dla gościa w czasie poniżej 2 minut.
 
 ### Secondary

@@ -3,7 +3,7 @@ project: RoomPilot
 version: 1
 status: draft
 created: 2026-05-27
-updated: 2026-05-28
+updated: 2026-06-01
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -32,7 +32,7 @@ Goście hotelowi tracą czas na recepcji z dwóch połączonych przyczyn: nie wi
 | F-01 | db-schema-supabase       | (foundation) tabele, RLS i dane startowe gotowe w Supabase              | —              | FR-001, FR-004, FR-006, FR-007, FR-008, FR-009, FR-012, FR-013, §Access Control | done     |
 | S-01 | staff-auth-qr-generation | logować się i generować/pobrać token QR gościa                          | F-01           | FR-001, FR-004, FR-005, FR-014                                        | proposed |
 | S-02 | guest-qr-auth-panel      | uzyskać dostęp przez dwuetapowy QR i zobaczyć panel usług z dashboardem | S-01, F-01     | FR-002, FR-003, FR-004, FR-006, FR-007, FR-010, US-01                 | proposed |
-| S-03 | guest-order-addon        | zamówić add-on i anulować go inline; recepcja dostaje e-mail w ≤60s     | S-02, F-01     | FR-008, FR-009, US-02                                                 | proposed |
+| S-03 | guest-order-addon        | zamówić add-on i anulować go inline; recepcja widzi licznik pending w dashboard; panel gościa odświeża statusy co 20s | S-02, F-01     | FR-008, FR-009, US-02                                                 | implementing |
 | S-04 | reception-order-panel    | przeglądać i obsługiwać zamówienia z auto-odświeżaniem co 10s           | S-03, F-01     | FR-012, FR-013, FR-015, US-03                                         | proposed |
 | S-05 | ai-concierge             | pytać AI concierge i dostać konkretną rekomendację domenową             | S-02           | FR-011                                                                | proposed |
 
@@ -100,15 +100,16 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 
 ### S-03: Gość składa i anuluje zamówienie add-on
 
-- **Outcome:** gość może zamówić add-on z panelu i zobaczyć status "oczekuje" z wizualnym badge'em; może anulować zamówienie inline dopóki recepcja go nie oznaczyła jako zrealizowane; recepcja dostaje powiadomienie za pomocą badge w dashboard recepcji.
+- **Outcome:** gość może zamówić add-on z panelu i zobaczyć status "oczekuje" z wizualnym badge'em; może anulować zamówienie inline dopóki recepcja go nie oznaczyła jako zrealizowane; panel gościa odpytuje serwer co 20s gdy jest co najmniej jedno pending zamówienie (bez przeładowania strony); recepcja widzi licznik pending orders jako badge w nav i kartę na dashboardzie.
 - **Change ID:** `guest-order-addon`
 - **PRD refs:** FR-008, FR-009, US-02
 - **Prerequisites:** S-02, F-01
 - **Parallel with:** S-05
 - **Blockers:** —
-- **Unknowns:** -
-- **Risk:** -
-- **Status:** proposed
+- **Unknowns:** —
+- **Risk:** —
+- **Note:** E-mail do recepcji permanently out of scope dla tego slice — zastąpiony badge'em w panelu staff. Polling co 20s po stronie gościa obsługuje widoczność zmian statusu bez ręcznego odświeżania.
+- **Status:** implementing
 
 ### S-04: Panel recepcji — lista zamówień i obsługa
 
@@ -119,7 +120,7 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 - **Parallel with:** S-05
 - **Blockers:** —
 - **Unknowns:** —
-- **Risk:** Gwiazda przewodnia — zamknięcie pętli self-service; polling co 10s jest prosty technicznie, ale propagacja statusu do panelu gościa wymaga spójnego cache-invalidation, żeby badge i status add-onu aktualizowały się bez ręcznego odświeżania przez gościa.
+- **Risk:** Gwiazda przewodnia — zamknięcie pętli self-service; polling co 10s jest prosty technicznie. Propagacja statusu do panelu gościa jest rozwiązana przez polling co 20s zaimplementowany w S-03 — bez cache-invalidation, bez zależności od S-04.
 - **Status:** proposed
 
 ### S-05: AI concierge — rekomendacje domenowe
