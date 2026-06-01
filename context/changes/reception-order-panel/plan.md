@@ -305,9 +305,9 @@ No new migrations. All required schema changes (orders table, RLS policies, inde
 
 #### Automated
 
-- [x] 1.1 TypeScript type-check passes: `npx tsc --noEmit`
-- [x] 1.2 Lint passes: `npm run lint`
-- [x] 1.3 Build passes: `npm run build`
+- [x] 1.1 TypeScript type-check passes: `npx tsc --noEmit` — 1627f7f
+- [x] 1.2 Lint passes: `npm run lint` — 1627f7f
+- [x] 1.3 Build passes: `npm run build` — 1627f7f
 
 #### Manual
 
@@ -320,9 +320,9 @@ No new migrations. All required schema changes (orders table, RLS policies, inde
 
 #### Automated
 
-- [ ] 2.1 `npx tsc --noEmit` passes
-- [ ] 2.2 `npm run lint` passes
-- [ ] 2.3 `npm run build` passes
+- [x] 2.1 `npx tsc --noEmit` passes
+- [x] 2.2 `npm run lint` passes
+- [x] 2.3 `npm run build` passes
 
 #### Manual
 
