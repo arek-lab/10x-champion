@@ -1,7 +1,7 @@
 ---
 change_id: services-image-field
 title: Add image_url field to services table with placeholder fallback in guest panel
-status: implementing
+status: implemented
 created: 2026-06-02
 updated: 2026-06-02
 

@@ -176,12 +176,12 @@ Create a shared `ServiceImage` component, update the included-services Astro tem
 
 #### Automated
 
-- [x] 2.1 TypeScript compiles without errors: `npm run build`
-- [x] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 TypeScript compiles without errors: `npm run build` — 4f4847d
+- [x] 2.2 Linting passes: `npm run lint` — 4f4847d
 
 #### Manual
 
-- [ ] 2.3 Thumbnails visible in both included-services and add-ons sections
-- [ ] 2.4 Null image_url shows category icon, not broken image
-- [ ] 2.5 Layout intact on 375px mobile viewport
-- [ ] 2.6 Add-on order/cancel flow works after AddonList changes
+- [x] 2.3 Thumbnails visible in both included-services and add-ons sections — 4f4847d
+- [x] 2.4 Null image_url shows category icon, not broken image — 4f4847d
+- [x] 2.5 Layout intact on 375px mobile viewport — 4f4847d
+- [x] 2.6 Add-on order/cancel flow works after AddonList changes — 4f4847d
