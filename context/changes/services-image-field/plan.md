@@ -163,21 +163,21 @@ Create a shared `ServiceImage` component, update the included-services Astro tem
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly: `npx supabase db reset`
-- [x] 1.2 TypeScript compiles without errors: `npm run build`
-- [x] 1.3 Linting passes: `npm run lint`
+- [x] 1.1 Migration applies cleanly: `npx supabase db reset` — adac198
+- [x] 1.2 TypeScript compiles without errors: `npm run build` — adac198
+- [x] 1.3 Linting passes: `npm run lint` — adac198
 
 #### Manual
 
-- [x] 1.4 All 8 seed services have non-null image_url after db reset
-- [x] 1.5 No TypeScript errors in files importing the services type
+- [x] 1.4 All 8 seed services have non-null image_url after db reset — adac198
+- [x] 1.5 No TypeScript errors in files importing the services type — adac198
 
 ### Phase 2: UI Layer
 
 #### Automated
 
-- [ ] 2.1 TypeScript compiles without errors: `npm run build`
-- [ ] 2.2 Linting passes: `npm run lint`
+- [x] 2.1 TypeScript compiles without errors: `npm run build`
+- [x] 2.2 Linting passes: `npm run lint`
 
 #### Manual
 

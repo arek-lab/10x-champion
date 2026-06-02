@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import ServiceImage from "@/components/guest/ServiceImage";
 
 interface Addon {
   id: string;
   name: string;
   description: string | null;
   price_pln: number | null;
+  image_url: string | null;
+  category: string;
 }
 
 interface OrderRecord {
@@ -125,10 +128,13 @@ export default function AddonList({ addons, initialOrders }: Props) {
 
         return (
           <li key={addon.id} className="border-border bg-card rounded-lg border px-4 py-3">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-foreground font-medium">{addon.name}</p>
-                {addon.description && <p className="text-muted-foreground text-sm">{addon.description}</p>}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <ServiceImage imageUrl={addon.image_url} category={addon.category} name={addon.name} />
+                <div>
+                  <p className="text-foreground font-medium">{addon.name}</p>
+                  {addon.description && <p className="text-muted-foreground text-sm">{addon.description}</p>}
+                </div>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-1">
                 {status === "pending" && order && (

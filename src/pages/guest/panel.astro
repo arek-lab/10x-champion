@@ -4,6 +4,7 @@ import GuestLayout from "@/layouts/GuestLayout.astro";
 import { createServiceRoleClient } from "@/lib/supabase";
 import AddonList from "@/components/guest/AddonList";
 import ConciergeWidget from "@/components/guest/ConciergeWidget";
+import ServiceImage from "@/components/guest/ServiceImage";
 
 if (!Astro.locals.guestToken) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
@@ -65,14 +66,17 @@ const { guest_name, room_number, check_out_date } = guestTokenRow;
       ) : (
         <ul class="space-y-3">
           {included.map((service) => (
-            <li class="flex items-start gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
-              <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700">
+            <li class="flex items-start justify-between gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3">
+              <div class="flex items-start gap-3">
+                <ServiceImage imageUrl={service.image_url} category={service.category} name={service.name} />
+                <div>
+                  <p class="font-medium text-gray-900">{service.name}</p>
+                  {service.description && <p class="text-sm text-gray-500">{service.description}</p>}
+                </div>
+              </div>
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700">
                 ✓
               </span>
-              <div>
-                <p class="font-medium text-gray-900">{service.name}</p>
-                {service.description && <p class="text-sm text-gray-500">{service.description}</p>}
-              </div>
             </li>
           ))}
         </ul>
