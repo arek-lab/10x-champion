@@ -33,7 +33,7 @@ if (guestTokenRow.check_out_date < today) {
 
 const { data: packageServicesRows, error: pkgError } = await supabase
   .from("package_services")
-  .select("inclusion_type, service_id, services(id, name, description, active, price_pln)")
+  .select("inclusion_type, service_id, services(id, name, description, category, active, price_pln, image_url)")
   .eq("package_id", packageId)
   .eq("services.active", true);
 
