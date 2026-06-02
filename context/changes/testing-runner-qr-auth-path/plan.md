@@ -376,29 +376,29 @@ After extracting the route logic, manually walk the full QR auth flow in the dev
 
 #### Manual
 
-- [ ] 1.5 npm test output contains no unexpected warnings (no astro:* module errors, no Vite version mismatch)
+- [x] 1.5 npm test output contains no unexpected warnings (no astro:* module errors, no Vite version mismatch)
 
 ### Phase 2: Middleware Unit Tests (R2 + R3)
 
 #### Automated
 
-- [x] 2.1 npm test exits 0; all 6 tests pass (1 smoke + 5 middleware)
-- [x] 2.2 npx tsc --noEmit passes
+- [x] 2.1 npm test exits 0; all 6 tests pass (1 smoke + 5 middleware) — 326fc83
+- [x] 2.2 npx tsc --noEmit passes — 326fc83
 
 #### Manual
 
-- [ ] 2.3 Each test name clearly identifies R2 or R3
-- [ ] 2.4 Expired-token test passes and output confirms guestToken === null for a past-exp JWT
+- [x] 2.3 Each test name clearly identifies R2 or R3
+- [x] 2.4 Expired-token test passes and output confirms guestToken === null for a past-exp JWT
 
 ### Phase 3: QR Route Integration Test (R1)
 
 #### Automated
 
-- [ ] 3.1 npm test exits 0; all 7 tests pass (1 smoke + 5 middleware + 2 QR auth)
-- [ ] 3.2 npx tsc --noEmit passes including src/lib/qr-auth.ts and updated .astro
-- [ ] 3.3 npm run lint passes
+- [x] 3.1 npm test exits 0; all 7 tests pass (1 smoke + 5 middleware + 2 QR auth)
+- [x] 3.2 npx tsc --noEmit passes including src/lib/qr-auth.ts and updated .astro
+- [x] 3.3 npm run lint passes
 
 #### Manual
 
-- [ ] 3.4 QR auth flow works correctly end-to-end in npm run dev after processQrAuth extraction
-- [ ] 3.5 R1 happy path test decodes sessionJwt and verifies all four claims plus exp=T23:59:59Z
+- [x] 3.4 QR auth flow works correctly end-to-end in npm run dev after processQrAuth extraction
+- [x] 3.5 R1 happy path test decodes sessionJwt and verifies all four claims plus exp=T23:59:59Z

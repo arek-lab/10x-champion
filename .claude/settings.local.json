@@ -34,7 +34,8 @@
       "Skill(10x-impl-review)",
       "Skill(10x-implement)",
       "Bash(echo \"empty: $?\")",
-      "Bash(grep -v \"^$\")"
+      "Bash(grep -v \"^$\")",
+      "Bash(Set-Clipboard \"/10x-implement testing-runner-qr-auth-path phase 3\")"
     ],
     "deny": [
       "Bash(rm -rf *)"

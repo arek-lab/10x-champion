@@ -1,8 +1,8 @@
 ---
 export const prerender = false;
-import { jwtVerify, SignJWT } from "jose";
 import { GUEST_SESSION_SECRET } from "astro:env/server";
 import { createServiceRoleClient } from "@/lib/supabase";
+import { processQrAuth } from "@/lib/qr-auth";
 
 if (Astro.locals.guestToken) {
   return Astro.redirect("/guest/panel", 302);
@@ -13,21 +13,7 @@ if (!qr_token) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
 
-const pendingCookie = Astro.cookies.get("pending_guest")?.value;
-if (!pendingCookie || !GUEST_SESSION_SECRET) {
-  return Astro.redirect("/guest/error?reason=invalid", 302);
-}
-
-const secret = new TextEncoder().encode(GUEST_SESSION_SECRET);
-
-let pendingPayload: { tokenId: string; type: string };
-try {
-  const { payload } = await jwtVerify(pendingCookie, secret, { algorithms: ["HS256"] });
-  pendingPayload = payload as typeof pendingPayload;
-} catch {
-  return Astro.redirect("/guest/error?reason=invalid", 302);
-}
-if (pendingPayload.type !== "pending_guest") {
+if (!GUEST_SESSION_SECRET) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
 
@@ -36,52 +22,24 @@ if (!supabase) {
   return Astro.redirect("/guest/error?reason=invalid", 302);
 }
 
-const { data: room, error: roomError } = await supabase
-  .from("room_qr_codes")
-  .select("room_number")
-  .eq("qr_token", qr_token)
-  .maybeSingle();
+const result = await processQrAuth({
+  qrToken: qr_token,
+  pendingCookieValue: Astro.cookies.get("pending_guest")?.value,
+  secret: new TextEncoder().encode(GUEST_SESSION_SECRET),
+  supabase,
+  today: new Date().toISOString().slice(0, 10),
+});
 
-if (roomError || !room) {
-  return Astro.redirect("/guest/error?reason=invalid", 302);
+if (result.type === "error") {
+  return Astro.redirect("/guest/error?reason=" + result.reason, 302);
 }
 
-const { data: guestToken, error: tokenError } = await supabase
-  .from("guest_tokens")
-  .select("id, room_number, package_id, check_out_date")
-  .eq("id", pendingPayload.tokenId)
-  .maybeSingle();
-
-if (tokenError || !guestToken) {
-  return Astro.redirect("/guest/error?reason=invalid", 302);
-}
-
-if (guestToken.room_number !== room.room_number) {
-  return Astro.redirect("/guest/error?reason=invalid", 302);
-}
-
-const today = new Date().toISOString().slice(0, 10);
-if (guestToken.check_out_date < today) {
-  return Astro.redirect("/guest/error?reason=expired", 302);
-}
-
-const sessionExpiry = new Date(guestToken.check_out_date + "T23:59:59Z");
-const sessionJwt = await new SignJWT({
-  tokenId: guestToken.id,
-  roomNumber: guestToken.room_number,
-  packageId: guestToken.package_id,
-  checkOutDate: guestToken.check_out_date,
-})
-  .setProtectedHeader({ alg: "HS256" })
-  .setExpirationTime(sessionExpiry)
-  .sign(secret);
-
-Astro.cookies.set("guest_session", sessionJwt, {
+Astro.cookies.set("guest_session", result.sessionJwt, {
   httpOnly: true,
   secure: true,
   sameSite: "lax",
   path: "/",
-  expires: sessionExpiry,
+  expires: result.sessionExpiry,
 });
 
 Astro.cookies.set("pending_guest", "", {

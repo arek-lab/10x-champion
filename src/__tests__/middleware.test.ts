@@ -76,7 +76,9 @@ describe("middleware — guest JWT", () => {
       { tokenId: "t1", roomNumber: "101", packageId: "p1", checkOutDate: "2026-12-31" },
       Math.floor(Date.now() / 1000) + 3600,
     );
-    const tampered = jwt.slice(0, -1) + (jwt.endsWith("a") ? "b" : "a");
+    const parts = jwt.split(".");
+    parts[2] = (parts[2][0] === "a" ? "b" : "a") + parts[2].slice(1);
+    const tampered = parts.join(".");
     const ctx = makeContext(tampered);
     const next = vi.fn().mockResolvedValue(new Response());
 
