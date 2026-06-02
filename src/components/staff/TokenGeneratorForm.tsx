@@ -28,7 +28,7 @@ function isoDate(d: Date): string {
 }
 
 const selectBase =
-  "w-full rounded-lg bg-white/10 border border-white/20 px-3 py-2 pl-10 text-white focus:outline-none focus:ring-2 focus:ring-purple-400 transition-colors appearance-none";
+  "w-full rounded-lg bg-white/10 border border-white/20 px-3 py-2 pl-10 text-white focus:outline-none focus:ring-2 focus:ring-ring transition-colors appearance-none";
 
 export default function TokenGeneratorForm({ packages, rooms }: Props) {
   const [view, setView] = useState<"form" | "generated">("form");
@@ -114,8 +114,8 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
 
           <div className="mb-6 space-y-2 text-center">
             <p className="text-xl font-semibold">{generated.guestName}</p>
-            <p className="text-blue-100/80">Room {generated.roomNumber}</p>
-            <p className="text-sm text-blue-100/60">
+            <p className="text-sidebar-foreground/80">Room {generated.roomNumber}</p>
+            <p className="text-sidebar-foreground/60 text-sm">
               {generated.checkInDate} → {generated.checkOutDate}
             </p>
           </div>
@@ -126,7 +126,7 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
               onClick={() => {
                 window.print();
               }}
-              className="flex-1 rounded-lg bg-purple-600 px-4 py-2 font-medium text-white transition-colors hover:bg-purple-500"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 flex-1 rounded-lg px-4 py-2 font-medium transition-colors"
             >
               Print
             </Button>
@@ -146,7 +146,7 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/10 p-8 backdrop-blur-xl">
-        <h1 className="mb-6 bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-2xl font-bold text-transparent">
+        <h1 className="from-sidebar-foreground to-accent mb-6 bg-gradient-to-r bg-clip-text text-2xl font-bold text-transparent">
           Generate Guest Token
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
@@ -160,7 +160,7 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
           />
 
           <div>
-            <label htmlFor="roomNumber" className="mb-1 block text-sm text-blue-100/80">
+            <label htmlFor="roomNumber" className="text-sidebar-foreground/80 mb-1 block text-sm">
               Room
             </label>
             <div className="relative">
@@ -175,11 +175,11 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
                 }}
                 className={cn(selectBase, !roomNumber && "text-white/40")}
               >
-                <option value="" disabled className="bg-gray-900 text-white">
+                <option value="" disabled className="bg-sidebar text-sidebar-foreground">
                   Select room
                 </option>
                 {rooms.map((r) => (
-                  <option key={r.id} value={r.room_number} className="bg-gray-900 text-white">
+                  <option key={r.id} value={r.room_number} className="bg-sidebar text-sidebar-foreground">
                     {r.room_number}
                   </option>
                 ))}
@@ -188,7 +188,7 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
           </div>
 
           <div>
-            <label htmlFor="packageId" className="mb-1 block text-sm text-blue-100/80">
+            <label htmlFor="packageId" className="text-sidebar-foreground/80 mb-1 block text-sm">
               Package
             </label>
             <div className="relative">
@@ -203,11 +203,11 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
                 }}
                 className={cn(selectBase, !packageId && "text-white/40")}
               >
-                <option value="" disabled className="bg-gray-900 text-white">
+                <option value="" disabled className="bg-sidebar text-sidebar-foreground">
                   Select package
                 </option>
                 {packages.map((p) => (
-                  <option key={p.id} value={p.id} className="bg-gray-900 text-white">
+                  <option key={p.id} value={p.id} className="bg-sidebar text-sidebar-foreground">
                     {p.name}
                   </option>
                 ))}
@@ -240,7 +240,7 @@ export default function TokenGeneratorForm({ packages, rooms }: Props) {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-purple-600 px-4 py-2 font-medium text-white transition-colors hover:bg-purple-500 disabled:opacity-60"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-lg px-4 py-2 font-medium transition-colors disabled:opacity-60"
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">

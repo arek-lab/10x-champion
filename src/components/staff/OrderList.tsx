@@ -91,8 +91,8 @@ export default function OrderList({ initialOrders }: Props) {
   if (orders.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <span className="mb-2 text-4xl text-green-500">✓</span>
-        <p className="text-lg text-gray-600">All clear. All guests are happy!</p>
+        <span className="text-chart-4 mb-2 text-4xl">✓</span>
+        <p className="text-muted-foreground text-lg">All clear. All guests are happy!</p>
       </div>
     );
   }
@@ -103,14 +103,14 @@ export default function OrderList({ initialOrders }: Props) {
         {orders.map((order) => {
           const isLoading = loading.has(order.id);
           return (
-            <li key={order.id} className="rounded-lg border border-gray-200 bg-white px-4 py-3">
+            <li key={order.id} className="border-border bg-card rounded-lg border px-4 py-3">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-medium text-gray-900">{order.guest_name}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-foreground font-medium">{order.guest_name}</p>
+                  <p className="text-muted-foreground text-sm">
                     Room {order.room_number} · {order.service_name}
                   </p>
-                  <p className="mt-0.5 text-xs text-gray-400">{elapsedLabel(order.created_at)}</p>
+                  <p className="text-muted-foreground mt-0.5 text-xs">{elapsedLabel(order.created_at)}</p>
                 </div>
                 <div className="flex shrink-0 gap-2">
                   <button
@@ -118,7 +118,7 @@ export default function OrderList({ initialOrders }: Props) {
                       setConfirmTarget({ orderId: order.id, action: "fulfilled" });
                     }}
                     disabled={isLoading}
-                    className="rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50"
+                    className="bg-chart-4 hover:bg-chart-4/90 rounded-md px-3 py-1.5 text-sm font-medium text-white disabled:opacity-50"
                   >
                     Fulfill
                   </button>
@@ -127,7 +127,7 @@ export default function OrderList({ initialOrders }: Props) {
                       setConfirmTarget({ orderId: order.id, action: "cancelled" });
                     }}
                     disabled={isLoading}
-                    className="rounded-md bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-200 disabled:opacity-50"
+                    className="bg-muted text-muted-foreground hover:bg-muted/80 rounded-md px-3 py-1.5 text-sm font-medium disabled:opacity-50"
                   >
                     Cancel
                   </button>

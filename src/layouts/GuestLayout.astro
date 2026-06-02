@@ -18,14 +18,14 @@ const formattedCheckOut = new Date(checkOutDate + "T00:00:00Z").toLocaleDateStri
 ---
 
 <Layout title={`Room ${roomNumber} — Guest Panel`}>
-  <div class="min-h-screen bg-gray-50">
-    <header class="border-b border-gray-200 bg-white px-6 py-4">
+  <div class="bg-background min-h-screen">
+    <header class="border-border bg-card border-b px-6 py-4">
       <div class="mx-auto flex max-w-2xl items-center justify-between">
         <div>
-          <span class="text-2xl font-bold text-gray-900">Room {roomNumber}</span>
+          <span class="text-foreground text-2xl font-bold">Room {roomNumber}</span>
         </div>
-        <div class="text-right text-sm text-gray-600">
-          <div class="font-medium text-gray-800">{guestName}</div>
+        <div class="text-muted-foreground text-right text-sm">
+          <div class="text-foreground font-medium">{guestName}</div>
           <div>Check-out: {formattedCheckOut}</div>
         </div>
       </div>

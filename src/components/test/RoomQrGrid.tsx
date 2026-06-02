@@ -18,18 +18,16 @@ export default function RoomQrGrid({ rooms, origin }: Props) {
         return (
           <div
             key={room.qr_token}
-            className="flex flex-col items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
+            className="border-border bg-card flex flex-col items-center gap-3 rounded-xl border p-4 shadow-sm"
           >
-            <span className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-              Room
-            </span>
-            <span className="text-3xl font-bold text-gray-900">{room.room_number}</span>
-            <div className="rounded-lg bg-white p-2 ring-1 ring-gray-100">
+            <span className="text-muted-foreground text-sm font-semibold tracking-wide uppercase">Room</span>
+            <span className="text-foreground text-3xl font-bold">{room.room_number}</span>
+            <div className="bg-card ring-border rounded-lg p-2 ring-1">
               <QRCode value={url} size={140} />
             </div>
             <a
               href={url}
-              className="truncate max-w-full text-xs text-blue-600 hover:underline"
+              className="text-secondary max-w-full truncate text-xs hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >

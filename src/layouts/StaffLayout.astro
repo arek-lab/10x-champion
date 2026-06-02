@@ -23,15 +23,18 @@ if (supabase) {
     >
       <span class="text-lg font-bold text-white">RoomPilot</span>
       <div class="flex items-center gap-4">
-        <a href="/dashboard/generate-token" class="text-sm text-blue-200 transition-colors hover:text-white">
+        <a href="/dashboard/generate-token" class="text-sidebar-foreground text-sm transition-colors hover:text-white">
           Generate Token
         </a>
-        <a href="/dashboard" class="flex items-center gap-1.5 text-sm text-blue-200 transition-colors hover:text-white">
+        <a
+          href="/dashboard"
+          class="text-sidebar-foreground flex items-center gap-1.5 text-sm transition-colors hover:text-white"
+        >
           Orders
           <span
             id="pending-badge"
             class:list={[
-              "flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white",
+              "bg-destructive flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-bold text-white",
               { hidden: pendingCount === 0 },
             ]}
           >

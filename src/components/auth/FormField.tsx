@@ -38,7 +38,7 @@ export function FormField({
 }: FormFieldProps) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1 block text-sm text-blue-100/80">
+      <label htmlFor={id} className="text-sidebar-foreground/80 mb-1 block text-sm">
         {label}
       </label>
       <div className="relative">
@@ -56,13 +56,13 @@ export function FormField({
           max={max}
           className={cn(
             inputBase,
-            error ? "border-red-400/60 focus:ring-red-400" : "border-white/20 focus:ring-purple-400",
+            error ? "border-destructive/60 focus:ring-destructive" : "focus:ring-ring border-white/20",
           )}
         />
         {endContent}
       </div>
       {error ? (
-        <p className="mt-1 flex items-center gap-1 text-xs text-red-300">
+        <p className="text-destructive/70 mt-1 flex items-center gap-1 text-xs">
           <CircleAlert className="size-3" />
           {error}
         </p>

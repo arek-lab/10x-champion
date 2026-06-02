@@ -112,7 +112,7 @@ export default function AddonList({ addons, initialOrders }: Props) {
   };
 
   if (addons.length === 0) {
-    return <p className="text-sm text-gray-500">No add-ons available for your package.</p>;
+    return <p className="text-muted-foreground text-sm">No add-ons available for your package.</p>;
   }
 
   return (
@@ -124,44 +124,46 @@ export default function AddonList({ addons, initialOrders }: Props) {
         const status = order?.status;
 
         return (
-          <li key={addon.id} className="rounded-lg border border-gray-200 bg-white px-4 py-3">
+          <li key={addon.id} className="border-border bg-card rounded-lg border px-4 py-3">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-medium text-gray-900">{addon.name}</p>
-                {addon.description && <p className="text-sm text-gray-500">{addon.description}</p>}
+                <p className="text-foreground font-medium">{addon.name}</p>
+                {addon.description && <p className="text-muted-foreground text-sm">{addon.description}</p>}
               </div>
               <div className="flex shrink-0 flex-col items-end gap-1">
                 {status === "pending" && order && (
                   <>
-                    <span className="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                    <span className="bg-accent/20 text-accent-foreground rounded-full px-2.5 py-0.5 text-xs font-medium">
                       ⏳ Pending
                     </span>
                     <button
                       onClick={() => handleCancel(addon.id, order.orderId)}
                       disabled={isLoading}
-                      className="mt-1 rounded-md bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-200 disabled:opacity-50"
+                      className="bg-muted text-muted-foreground hover:bg-muted/80 mt-1 rounded-md px-3 py-1 text-sm font-medium disabled:opacity-50"
                     >
                       {isLoading ? "Cancelling…" : "Cancel"}
                     </button>
                   </>
                 )}
                 {status === "fulfilled" && (
-                  <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                  <span className="bg-chart-4/20 text-chart-4 rounded-full px-2.5 py-0.5 text-xs font-medium">
                     ✓ Fulfilled
                   </span>
                 )}
                 {(!status || status === "cancelled") && (
                   <>
                     {status === "cancelled" && (
-                      <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
+                      <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-0.5 text-xs font-medium">
                         ✕ Cancelled
                       </span>
                     )}
-                    {addon.price_pln !== null && <span className="text-sm text-gray-500">{addon.price_pln} PLN</span>}
+                    {addon.price_pln !== null && (
+                      <span className="text-muted-foreground text-sm">{addon.price_pln} PLN</span>
+                    )}
                     <button
                       onClick={() => handleOrder(addon.id)}
                       disabled={isLoading}
-                      className="mt-1 rounded-md bg-blue-600 px-3 py-1 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                      className="bg-secondary text-secondary-foreground hover:bg-secondary/90 mt-1 rounded-md px-3 py-1 text-sm font-medium disabled:opacity-50"
                     >
                       {isLoading ? "Ordering…" : "Order"}
                     </button>
@@ -169,7 +171,7 @@ export default function AddonList({ addons, initialOrders }: Props) {
                 )}
               </div>
             </div>
-            {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+            {error && <p className="text-destructive mt-1 text-xs">{error}</p>}
           </li>
         );
       })}

@@ -388,21 +388,21 @@ The roadmap risk note flags: "warto zrobić visual snapshot przed i po" — scre
 
 #### Automated
 
-- [x] 2.1 TypeScript/lint check passes: `npm run lint`
-- [x] 2.2 Dev server starts without errors: `npm run dev`
+- [x] 2.1 TypeScript/lint check passes: `npm run lint` — 7f9c34c
+- [x] 2.2 Dev server starts without errors: `npm run dev` — 7f9c34c
 
 #### Manual
 
-- [x] 2.3 Body text renders in Inter
-- [x] 2.4 h1–h3 elements render in Playfair Display
-- [x] 2.5 `font-sans` / `font-serif` utilities verified in DevTools
+- [x] 2.3 Body text renders in Inter — 7f9c34c
+- [x] 2.4 h1–h3 elements render in Playfair Display — 7f9c34c
+- [x] 2.5 `font-sans` / `font-serif` utilities verified in DevTools — 7f9c34c
 
 ### Phase 3: Hardcode Audit & Cleanup
 
 #### Automated
 
-- [ ] 3.1 TypeScript/lint check passes: `npm run lint`
-- [ ] 3.2 Audit grep returns zero matches in `src/components/` and `src/layouts/`
+- [x] 3.1 TypeScript/lint check passes: `npm run lint`
+- [x] 3.2 Audit grep returns zero matches in `src/components/` and `src/layouts/`
 
 #### Manual
 

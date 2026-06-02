@@ -77,7 +77,7 @@ describe("middleware — guest JWT", () => {
       Math.floor(Date.now() / 1000) + 3600,
     );
     const parts = jwt.split(".");
-    parts[2] = (parts[2][0] === "a" ? "b" : "a") + parts[2].slice(1);
+    parts[2] = (parts[2].startsWith("a") ? "b" : "a") + parts[2].slice(1);
     const tampered = parts.join(".");
     const ctx = makeContext(tampered);
     const next = vi.fn().mockResolvedValue(new Response());
