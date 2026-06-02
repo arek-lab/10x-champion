@@ -1,7 +1,7 @@
 ---
 change_id: guest-panel-redesign
 title: Guest panel mobile-first redesign with boutique hotel aesthetics
-status: implementing
+status: implemented
 created: 2026-06-02
 updated: 2026-06-02
 

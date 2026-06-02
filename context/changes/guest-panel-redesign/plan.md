@@ -314,16 +314,16 @@ Brak nowych zapytań do bazy. Placeholdery gradientowe renderują się bez sieci
 
 #### Automated
 
-- [x] 3.1 TypeScript kompiluje się bez błędów: `npx tsc --noEmit`
-- [x] 3.2 Lint przechodzi: `npm run lint`
+- [x] 3.1 TypeScript kompiluje się bez błędów: `npx tsc --noEmit` — d059f33
+- [x] 3.2 Lint przechodzi: `npm run lint` — d059f33
 
 #### Manual
 
-- [x] 3.3 Add-ony renderują się jako grid 2-kol
-- [x] 3.4 Przycisk "Order" ma tap target ≥ 44px (full-width dolny slot)
-- [x] 3.5 Zamówienie add-ona działa end-to-end
-- [x] 3.6 Anulowanie zamówienia działa
-- [x] 3.7 Polling co 20s aktualizuje statusy
-- [x] 3.8 ConciergeWidget FAB — mały okrągły przycisk z ikoną Sparkles
-- [x] 3.9 FAB otwiera panel po dotknięciu
-- [x] 3.10 Brak regressionów w sekcji included services
+- [x] 3.3 Add-ony renderują się jako grid 2-kol — d059f33
+- [x] 3.4 Przycisk "Order" ma tap target ≥ 44px (full-width dolny slot) — d059f33
+- [x] 3.5 Zamówienie add-ona działa end-to-end — d059f33
+- [x] 3.6 Anulowanie zamówienia działa — d059f33
+- [x] 3.7 Polling co 20s aktualizuje statusy — d059f33
+- [x] 3.8 ConciergeWidget FAB — mały okrągły przycisk z ikoną Sparkles — d059f33
+- [x] 3.9 FAB otwiera panel po dotknięciu — d059f33
+- [x] 3.10 Brak regressionów w sekcji included services — d059f33
