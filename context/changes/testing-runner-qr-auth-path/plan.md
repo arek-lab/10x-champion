@@ -369,10 +369,10 @@ After extracting the route logic, manually walk the full QR auth flow in the dev
 
 #### Automated
 
-- [x] 1.1 npm install completes with no peer dep errors
-- [x] 1.2 npm test exits 0; 1 suite, 1 test passing
-- [x] 1.3 npm run lint passes on vitest.config.ts and smoke.test.ts
-- [x] 1.4 npx tsc --noEmit passes
+- [x] 1.1 npm install completes with no peer dep errors — 96159ed
+- [x] 1.2 npm test exits 0; 1 suite, 1 test passing — 96159ed
+- [x] 1.3 npm run lint passes on vitest.config.ts and smoke.test.ts — 96159ed
+- [x] 1.4 npx tsc --noEmit passes — 96159ed
 
 #### Manual
 
@@ -382,8 +382,8 @@ After extracting the route logic, manually walk the full QR auth flow in the dev
 
 #### Automated
 
-- [ ] 2.1 npm test exits 0; all 6 tests pass (1 smoke + 5 middleware)
-- [ ] 2.2 npx tsc --noEmit passes
+- [x] 2.1 npm test exits 0; all 6 tests pass (1 smoke + 5 middleware)
+- [x] 2.2 npx tsc --noEmit passes
 
 #### Manual
 

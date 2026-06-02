@@ -35,6 +35,10 @@ Goście hotelowi tracą czas na recepcji z dwóch połączonych przyczyn: nie wi
 | S-03 | guest-order-addon        | zamówić add-on i anulować go inline; recepcja widzi licznik pending w dashboard; panel gościa odświeża statusy co 20s | S-02, F-01     | FR-008, FR-009, US-02                                                 | implementing |
 | S-04 | reception-order-panel    | przeglądać i obsługiwać zamówienia z auto-odświeżaniem co 10s           | S-03, F-01     | FR-012, FR-013, FR-015, US-03                                         | proposed |
 | S-05 | ai-concierge             | pytać AI concierge i dostać konkretną rekomendację domenową             | S-02           | FR-011                                                                | proposed |
+| D-01 | design-token-foundation  | (foundation) spójny design system: paleta, typografia, spacing gotowe jako Tailwind tokens + CSS vars | S-04           | —                | proposed |
+| D-02 | guest-panel-redesign     | gość widzi panel z kartami usług 2-w-linii ze zdjęciami, mobile-first, w stylu boutique hotel        | D-01           | FR-006, FR-007   | proposed |
+| D-02a| services-image-field     | (side task) pole image_url w tabeli services + fallback placeholder w UI                              | F-01           | FR-006           | proposed |
+| D-03 | reception-panel-polish   | personel widzi czytelny panel zamówień z wyraźnymi akcjami i pending badge, desktop-optimized         | D-01           | FR-012, FR-013   | proposed |
 
 ## Streams
 
@@ -44,6 +48,7 @@ Navigation aid — grupuje elementy według wspólnego łańcucha prererekwizyt�
 |--------|-------------------|--------------------------------------------------|--------------------------------------------------------------------------------|
 | A      | Ścieżka must-have | `F-01` → `S-01` → `S-02` → `S-03` → `S-04`     | Jedyna ścieżka do gwiazdy przewodniej; cel `speed` nakazuje skupić tu całą uwagę. |
 | B      | AI concierge      | `S-05`                                           | Odgałęzienie z `S-02`; może być realizowane równolegle z `S-03`/`S-04`.       |
+| C      | Design & polish   | `D-01` → `D-02` (+`D-02a`) → `D-03`            | Realizuj po S-04; D-02a może biec równolegle z D-01 bo dotyka tylko DB i mock UI. |
 
 ## Baseline
 
@@ -135,6 +140,54 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 - **Risk:** Jakość odpowiedzi zależy całkowicie od jakości danych hotelowych w prompcie; odpowiedź generyczna to failure wg PRD NFR. OpenAI SDK na Workers — dodatkowy narzut CPU (Workers Paid mandatory per `context/foundation/infrastructure.md`).
 - **Status:** proposed
 
+### D-01: Design token foundation
+
+- **Outcome:** spójny design system dostępny w całym projekcie — paleta marokańskiego boutique hotel (terakota, indygo, kremowe tło, złote akcenty), typografia (sans-serif body + opcjonalny serif w nagłówkach), spacing scale i border-radius skonfigurowane jako Tailwind CSS variables i przepisane tokeny shadcn; żaden komponent nie używa już domyślnych kolorów shadcn.
+- **Change ID:** `design-token-foundation`
+- **PRD refs:** —
+- **Prerequisites:** S-04
+- **Parallel with:** D-02a
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Zmiana tokenów shadcn może nadpisać style komponentów które działają — warto zrobić visual snapshot przed i po.
+- **Status:** proposed
+
+### D-02a: Pole image_url w tabeli services (side task)
+
+- **Outcome:** tabela `services` w Supabase ma opcjonalne pole `image_url` (nullable text/varchar) - trzeba dodać; API i typy TypeScript są zaktualizowane; UI panelu gościa wyświetla zdjęcie gdy pole jest wypełnione, a placeholder (mock marokańska tekstura lub gradient) gdy puste — bez błędów i bez pustych ramek.
+- **Change ID:** `services-image-field`
+- **PRD refs:** FR-006
+- **Prerequisites:** F-01
+- **Parallel with:** D-01
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Niski — pole nullable, placeholder zawsze działa jako fallback; migracja niedestrukcyjna.
+- **Status:** proposed
+
+### D-02: Panel gościa — mobile-first redesign
+
+- **Outcome:** gość widzi panel usług jako responsywny grid 2 kolumny na mobile — każda karta ma zdjęcie (lub placeholder), nazwę usługi i status badge; nawigacja i flow zamówienia są wygodne kciukiem (tap targets ≥ 44px); całość wizualnie spójna z estetyką ciepłego boutique hotel: kremowe tło, terakota jako kolor akcji, indygo dla statusów, opcjonalny serif w nagłówkach sekcji.
+- **Change ID:** `guest-panel-redesign`
+- **PRD refs:** FR-006, FR-007, FR-010
+- **Prerequisites:** D-01, D-02a
+- **Parallel with:** D-03
+- **Blockers:** —
+- **Unknowns:** Czy mock zdjęcia to lokalne assety czy zewnętrzne URL (np. Unsplash)? Owner: user. Block: no (można zacząć od lokalnych placeholderów, podmienić później).
+- **Risk:** Grid 2-kolumnowy na bardzo małych ekranach (< 360px) może wymagać breakpointu fallback do 1 kolumny.
+- **Status:** proposed
+
+### D-03: Panel recepcji — desktop polish
+
+- **Outcome:** personel recepcji widzi zamówienia w czytelnym layoucie zoptymalizowanym pod desktop/tablet — pending badge w nawigacji jest natychmiast widoczny, akcje "zrealizuj"/"anuluj" są jednoznaczne i nie wymagają potwierdzenia modala dla szybkiej obsługi; całość spójna z tokenami z D-01 (nie musi być tak "hotelowa" jak panel gościa — priorytet to czytelność operacyjna).
+- **Change ID:** `reception-panel-polish`
+- **PRD refs:** FR-012, FR-013, FR-015
+- **Prerequisites:** D-01
+- **Parallel with:** D-02
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Niski — zmiany wyłącznie wizualne, logika zamówień niezmieniona.
+- **Status:** proposed
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID                | Suggested issue title                               | Ready for `/10x-plan` | Notes                                                       |
@@ -145,6 +198,10 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 | S-03       | guest-order-addon        | Gość — zamawianie i anulowanie add-onów             | no                    | Wymaga S-02; równolegle z S-05                              |
 | S-04       | reception-order-panel    | Panel recepcji — lista zamówień i obsługa           | no                    | Wymaga S-03; gwiazda przewodnia — cały MVP tu się domyka    |
 | S-05       | ai-concierge             | AI concierge — odpowiedzi domenowe dla hotelu       | no                    | Wymaga S-02; realizuj równolegle z S-03/S-04                |
+| D-01  | design-token-foundation | Design system — paleta, typografia, Tailwind tokens     | yes | Run `/10x-plan design-token-foundation`       |
+| D-02a | services-image-field    | DB: pole image_url w services + placeholder w UI        | yes | Run `/10x-plan services-image-field`          |
+| D-02  | guest-panel-redesign    | Panel gościa — mobile-first redesign boutique           | no  | Wymaga D-01, D-02a                            |
+| D-03  | reception-panel-polish  | Panel recepcji — desktop polish                         | no  | Wymaga D-01; równolegle z D-02                |
 
 ## Open Roadmap Questions
 

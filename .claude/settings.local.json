@@ -31,7 +31,10 @@
       "Skill(10x-plan)",
       "Bash(echo \"exit: $?\")",
       "Bash(not exist *)",
-      "Skill(10x-impl-review)"
+      "Skill(10x-impl-review)",
+      "Skill(10x-implement)",
+      "Bash(echo \"empty: $?\")",
+      "Bash(grep -v \"^$\")"
     ],
     "deny": [
       "Bash(rm -rf *)"
