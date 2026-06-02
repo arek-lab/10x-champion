@@ -140,6 +140,8 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 - **Risk:** Jakość odpowiedzi zależy całkowicie od jakości danych hotelowych w prompcie; odpowiedź generyczna to failure wg PRD NFR. OpenAI SDK na Workers — dodatkowy narzut CPU (Workers Paid mandatory per `context/foundation/infrastructure.md`).
 - **Status:** proposed
 
+## Design
+
 ### D-01: Design token foundation
 
 - **Outcome:** spójny design system dostępny w całym projekcie — paleta marokańskiego boutique hotel (terakota, indygo, kremowe tło, złote akcenty), typografia (sans-serif body + opcjonalny serif w nagłówkach), spacing scale i border-radius skonfigurowane jako Tailwind CSS variables i przepisane tokeny shadcn; żaden komponent nie używa już domyślnych kolorów shadcn.
@@ -166,7 +168,7 @@ Foundations poniżej zakładają, że poniższe warstwy są dostępne i ich NIE 
 
 ### D-02: Panel gościa — mobile-first redesign
 
-- **Outcome:** gość widzi panel usług jako responsywny grid 2 kolumny na mobile — każda karta ma zdjęcie (lub placeholder), nazwę usługi i status badge; nawigacja i flow zamówienia są wygodne kciukiem (tap targets ≥ 44px); całość wizualnie spójna z estetyką ciepłego boutique hotel: kremowe tło, terakota jako kolor akcji, indygo dla statusów, opcjonalny serif w nagłówkach sekcji.
+- **Outcome:** gość widzi panel usług jako responsywny grid 2 kolumny na mobile — każda karta ma zdjęcie (lub placeholder) u góry, poniżej nazwę usługi i status badge; nawigacja i flow zamówienia są wygodne kciukiem (tap targets ≥ 44px); całość wizualnie spójna z estetyką ciepłego boutique hotel: kremowe tło, terakota jako kolor akcji, indygo dla statusów, opcjonalny serif w nagłówkach sekcji, ux na poziomie profesjonalnego e-commerce.
 - **Change ID:** `guest-panel-redesign`
 - **PRD refs:** FR-006, FR-007, FR-010
 - **Prerequisites:** D-01, D-02a

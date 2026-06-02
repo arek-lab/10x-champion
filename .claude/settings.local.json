@@ -40,7 +40,9 @@
       "Bash(Get-Process -Name \"supabase\" -ErrorAction SilentlyContinue)",
       "Bash(Stop-Process -Force)",
       "Bash(Write-Host \"done\")",
-      "PowerShell(Get-Process *)"
+      "PowerShell(Get-Process *)",
+      "PowerShell(head *)",
+      "PowerShell(sort *)"
     ],
     "deny": [
       "Bash(rm -rf *)"
