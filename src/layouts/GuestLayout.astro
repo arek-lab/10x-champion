@@ -9,6 +9,8 @@ interface Props {
 
 const { roomNumber, guestName, checkOutDate } = Astro.props;
 
+const firstName = guestName.split(" ")[0];
+
 const formattedCheckOut = new Date(checkOutDate + "T00:00:00Z").toLocaleDateString("en-GB", {
   year: "numeric",
   month: "long",
@@ -19,18 +21,18 @@ const formattedCheckOut = new Date(checkOutDate + "T00:00:00Z").toLocaleDateStri
 
 <Layout title={`Room ${roomNumber} — Guest Panel`}>
   <div class="bg-background min-h-screen">
-    <header class="border-border bg-card border-b px-6 py-4">
+    <header class="border-border bg-background sticky top-0 z-10 border-b px-6 py-3">
       <div class="mx-auto flex max-w-2xl items-center justify-between">
-        <div>
-          <span class="text-foreground text-2xl font-bold">Room {roomNumber}</span>
+        <div class="flex items-baseline gap-2">
+          <span class="text-foreground font-serif text-lg">{firstName}</span>
+          <span class="text-muted-foreground text-sm">Room {roomNumber}</span>
         </div>
-        <div class="text-muted-foreground text-right text-sm">
-          <div class="text-foreground font-medium">{guestName}</div>
-          <div>Check-out: {formattedCheckOut}</div>
+        <div class="text-muted-foreground text-right text-xs">
+          Check-out: {formattedCheckOut}
         </div>
       </div>
     </header>
-    <main class="mx-auto max-w-2xl px-6 py-8">
+    <main class="mx-auto max-w-2xl px-4 py-6">
       <slot />
     </main>
   </div>

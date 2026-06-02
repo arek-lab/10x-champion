@@ -46,7 +46,7 @@ function ImageSlot({ imageUrl, category, name }: { imageUrl: string | null; cate
 function IncludedBottomSlot() {
   return (
     <div className="border-border border-t px-3 py-2">
-      <span className="text-primary flex items-center gap-1.5 text-sm font-medium">
+      <span className="text-secondary flex items-center gap-1.5 text-sm font-medium">
         <CheckCircle size={14} />
         Included in your package
       </span>

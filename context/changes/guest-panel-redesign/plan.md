@@ -283,32 +283,32 @@ Brak nowych zapytań do bazy. Placeholdery gradientowe renderują się bez sieci
 
 #### Automated
 
-- [x] 1.1 TypeScript kompiluje się bez błędów: `npx tsc --noEmit`
-- [x] 1.2 Lint przechodzi: `npm run lint`
+- [x] 1.1 TypeScript kompiluje się bez błędów: `npx tsc --noEmit` — 71951d4
+- [x] 1.2 Lint przechodzi: `npm run lint` — 71951d4
 
 #### Manual
 
-- [ ] 1.3 ServiceCard variant=included renderuje się poprawnie (banner + nazwa + badge)
-- [ ] 1.4 ServiceCard variant=addon z orderStatus=none pokazuje cenę i przycisk Order
-- [ ] 1.5 ServiceCard variant=addon z orderStatus=pending pokazuje badge i przycisk Cancel
-- [ ] 1.6 Placeholder gradient renderuje się gdy imageUrl null
-- [ ] 1.7 Obraz renderuje się z imageUrl
+- [x] 1.3 ServiceCard variant=included renderuje się poprawnie (banner + nazwa + badge)
+- [x] 1.4 ServiceCard variant=addon z orderStatus=none pokazuje cenę i przycisk Order
+- [x] 1.5 ServiceCard variant=addon z orderStatus=pending pokazuje badge i przycisk Cancel
+- [x] 1.6 Placeholder gradient renderuje się gdy imageUrl null
+- [x] 1.7 Obraz renderuje się z imageUrl
 
 ### Phase 2: Panel Page + Header Redesign
 
 #### Automated
 
-- [ ] 2.1 TypeScript kompiluje się bez błędów: `npx tsc --noEmit`
-- [ ] 2.2 Lint przechodzi: `npm run lint`
+- [x] 2.1 TypeScript kompiluje się bez błędów: `npx tsc --noEmit`
+- [x] 2.2 Lint przechodzi: `npm run lint`
 
 #### Manual
 
-- [ ] 2.3 Header jest sticky przy scrollowaniu
-- [ ] 2.4 Header pokazuje tylko pierwsze imię (nie pełne imię i nazwisko)
-- [ ] 2.5 Grid included 2-kol na telefonie (≥360px)
-- [ ] 2.6 Grid odpada do 1-kol na ekranie 320px (sprawdź w DevTools)
-- [ ] 2.7 Serif nagłówki (Playfair Display) nad obiema sekcjami
-- [ ] 2.8 Brak hardcoded gray-* klas w headerze
+- [x] 2.3 Header jest sticky przy scrollowaniu
+- [x] 2.4 Header pokazuje tylko pierwsze imię (nie pełne imię i nazwisko)
+- [x] 2.5 Grid included 2-kol na telefonie (≥360px)
+- [x] 2.6 Grid odpada do 1-kol na ekranie 320px (sprawdź w DevTools)
+- [x] 2.7 Serif nagłówki (Playfair Display) nad obiema sekcjami
+- [x] 2.8 Brak hardcoded gray-* klas w headerze
 
 ### Phase 3: AddonList Grid Refactor + ConciergeWidget FAB
 
