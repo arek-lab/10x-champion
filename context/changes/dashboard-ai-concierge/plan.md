@@ -185,27 +185,27 @@ Trzy nowe komponenty React: `AiConciergePanel` (wrapper z Tabs), `HotelDataForm`
 
 #### Automated
 
-- [x] 1.1 Type check passes: `npm run lint`
-- [x] 1.2 Build passes: `npm run build`
+- [x] 1.1 Type check passes: `npm run lint` — ca1b993
+- [x] 1.2 Build passes: `npm run build` — ca1b993
 
 #### Manual
 
-- [x] 1.3 Link "AI Concierge" widoczny w desktop nav po zalogowaniu
-- [x] 1.4 Link widoczny w mobile hamburger menu
-- [x] 1.5 `/dashboard/ai-concierge` ładuje się bez błędów
-- [x] 1.6 Aktywny link w mobile nav jest podświetlony
+- [x] 1.3 Link "AI Concierge" widoczny w desktop nav po zalogowaniu — ca1b993
+- [x] 1.4 Link widoczny w mobile hamburger menu — ca1b993
+- [x] 1.5 `/dashboard/ai-concierge` ładuje się bez błędów — ca1b993
+- [x] 1.6 Aktywny link w mobile nav jest podświetlony — ca1b993
 
 ### Phase 2: Komponenty panelu
 
 #### Automated
 
-- [ ] 2.1 Type check passes: `npm run lint`
-- [ ] 2.2 Build passes: `npm run build`
+- [x] 2.1 Type check passes: `npm run lint`
+- [x] 2.2 Build passes: `npm run build`
 
 #### Manual
 
-- [ ] 2.3 Tab "Dane o hotelu": formularz pre-wypełniony danymi z hotel-context.ts
-- [ ] 2.4 Przycisk "Zapisz" nie wysyła requesta sieciowego
-- [ ] 2.5 Po kliknięciu "Zapisz" pojawia się "✓ Zapisano", znika po ~2s
-- [ ] 2.6 Tab "Alerty AI Concierge": placeholder z ikoną i tekstem "No alerts yet"
-- [ ] 2.7 Brak błędów TypeScript i konsoli przeglądarki
+- [x] 2.3 Tab "Dane o hotelu": formularz pre-wypełniony danymi z hotel-context.ts
+- [x] 2.4 Przycisk "Zapisz" nie wysyła requesta sieciowego
+- [x] 2.5 Po kliknięciu "Zapisz" pojawia się "✓ Zapisano", znika po ~2s
+- [x] 2.6 Tab "Alerty AI Concierge": placeholder z ikoną i tekstem "No alerts yet"
+- [x] 2.7 Brak błędów TypeScript i konsoli przeglądarki
