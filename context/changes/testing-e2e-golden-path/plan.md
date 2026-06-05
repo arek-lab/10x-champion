@@ -500,25 +500,25 @@ The `data-testid="pending-badge"` change in `StaffLayout.astro` is purely additi
 
 #### Automated
 
-- [x] 2.1 npm run test:e2e exits 0 after Phase 2 changes
-- [x] 2.2 npx tsc --noEmit passes
+- [x] 2.1 npm run test:e2e exits 0 after Phase 2 changes — 3d008a6
+- [x] 2.2 npx tsc --noEmit passes — 3d008a6
 
 #### Manual
 
-- [x] 2.3 .env.test.example tracked in git; .env.test absent from git status
-- [x] 2.4 Seed SQL inserts succeed in Supabase dashboard (4 rows, no conflicts)
-- [x] 2.5 Staff test account exists in Supabase Auth with staff_role metadata
+- [x] 2.3 .env.test.example tracked in git; .env.test absent from git status — 3d008a6
+- [x] 2.4 Seed SQL inserts succeed in Supabase dashboard (4 rows, no conflicts) — 3d008a6
+- [x] 2.5 Staff test account exists in Supabase Auth with staff_role metadata — 3d008a6
 
 ### Phase 3: Golden Path Spec
 
 #### Automated
 
-- [ ] 3.1 npm run test:e2e exits 0; 2 specs, 2 tests passing
-- [ ] 3.2 npx tsc --noEmit passes
-- [ ] 3.3 npm run lint passes
+- [x] 3.1 npm run test:e2e exits 0; 2 specs, 2 tests passing
+- [x] 3.2 npx tsc --noEmit passes
+- [x] 3.3 npm run lint passes
 
 #### Manual
 
-- [ ] 3.4 npm run test:e2e:headed — flow visible in browser, all steps produce correct UI changes
-- [ ] 3.5 After staff fulfillment the order card disappears before guest page reload
-- [ ] 3.6 Guest page reload shows "✓ Fulfilled" on the E2E Massage card
+- [x] 3.4 npm run test:e2e:headed — flow visible in browser, all steps produce correct UI changes
+- [x] 3.5 After staff fulfillment the order card disappears before guest page reload
+- [x] 3.6 Guest page reload shows "✓ Fulfilled" on the E2E Massage card
