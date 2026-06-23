@@ -1,40 +1,22 @@
 import { pathToFileURL } from 'node:url';
-import { generateText, Output } from 'ai';
-import { getModel, DEFAULT_MODEL } from './model.js';
-import { reviewInstructions, buildReviewPrompt } from './prompts/review.js';
-import { findingSchema, reviewSchema, type Finding, type Review } from './schemas/review.js';
+import { reviewCode } from './agents/code-reviewer.js';
 
 /**
- * Basic entry point for the AI-powered code reviewer.
+ * Public barrel for the AI-powered code reviewer.
  *
- * Wires the Vercel AI SDK to the OpenRouter provider and exposes a small,
- * typed surface (`getModel`, `reviewCode`) intended as a foundation for
- * further integration. Run directly (`npm run start`) for a quick smoke test.
- */
-
-// Re-export the moved surface so the package entry is unchanged at this phase
-// boundary. Phase 2 converts `reviewCode` to a `ToolLoopAgent` and turns this
-// file into the public barrel.
-export { getModel, DEFAULT_MODEL };
-export { findingSchema, reviewSchema };
-export type { Finding, Review };
-
-/**
- * Reviews a snippet of code and returns a structured, validated result.
+ * Re-exports the reusable `ToolLoopAgent` instance, the `reviewCode` convenience,
+ * the OpenRouter model seam, and the structured-output schemas/types. A future
+ * promptfoo eval can drive the reviewer through this surface with no re-export
+ * churn.
  *
- * @param code     The source code to review.
- * @param language Optional language hint (e.g. "typescript").
+ * NOTE: the `main()` smoke test + entry guard below is transitional (Phase 2
+ * runtime verification only). Phase 3 removes it so this barrel becomes
+ * side-effect-free, relocating the script-detection logic into `cli.ts`.
  */
-export async function reviewCode(code: string, language?: string): Promise<Review> {
-  const { output } = await generateText({
-    model: getModel(),
-    system: reviewInstructions,
-    prompt: buildReviewPrompt(code, language),
-    output: Output.object({ schema: reviewSchema }),
-  });
-
-  return output;
-}
+export { codeReviewerAgent, reviewCode } from './agents/code-reviewer.js';
+export { getModel, DEFAULT_MODEL } from './model.js';
+export { findingSchema, reviewSchema } from './schemas/review.js';
+export type { Finding, Review } from './schemas/review.js';
 
 /** Minimal smoke test executed only when this file is run directly. */
 async function main(): Promise<void> {
