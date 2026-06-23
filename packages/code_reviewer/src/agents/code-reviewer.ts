@@ -6,24 +6,33 @@ import { reviewSchema, type Review } from '../schemas/review.js';
 /**
  * The structured-output spec the agent carries. Naming it explicitly (the AI SDK
  * exports the `Output` type only as a member of the `Output` namespace) lets the
- * exported `codeReviewerAgent` type be emitted into the `.d.ts` under
- * `declaration: true` — without it, tsc fails with TS4023 because the inferred
- * type references an un-nameable `Output` interface.
+ * exported agent type be emitted into the `.d.ts` under `declaration: true` —
+ * without it, tsc fails with TS4023 because the inferred type references an
+ * un-nameable `Output` interface.
  */
 type ReviewOutput = Output.Output<Review>;
 
+/** Memoized singleton — see `getCodeReviewerAgent`. */
+let cachedAgent: ToolLoopAgent<never, {}, ReviewOutput> | undefined;
+
 /**
- * The code reviewer, defined once as a reusable `ToolLoopAgent` with structured
- * output. Constructed at module load so every `reviewCode` call reuses the same
- * agent and provider. Tool-free: it relies on `Output.object` for a validated,
- * schema-typed `Review`. A future promptfoo provider can wrap either this agent
- * instance or the `reviewCode` convenience below.
+ * Returns the shared code-reviewer agent, constructing it on first use and
+ * reusing it thereafter. Construction is **lazy** (not at module load) so that
+ * importing the library barrel is side-effect-free: a consumer that only wants
+ * the schemas/types never triggers `getModel()` or requires `OPENROUTER_API_KEY`.
+ * The agent is tool-free, relying on `Output.object` for a validated,
+ * schema-typed `Review`. A future promptfoo provider can wrap this accessor or
+ * the `reviewCode` convenience below.
  */
-export const codeReviewerAgent: ToolLoopAgent<never, {}, ReviewOutput> = new ToolLoopAgent({
-  model: getModel(),
-  instructions: reviewInstructions,
-  output: Output.object({ schema: reviewSchema }),
-});
+export function getCodeReviewerAgent(): ToolLoopAgent<never, {}, ReviewOutput> {
+  cachedAgent ??= new ToolLoopAgent({
+    model: getModel(),
+    instructions: reviewInstructions,
+    output: Output.object({ schema: reviewSchema }),
+  });
+
+  return cachedAgent;
+}
 
 /**
  * Reviews a snippet of code and returns a structured, validated result.
@@ -32,7 +41,7 @@ export const codeReviewerAgent: ToolLoopAgent<never, {}, ReviewOutput> = new Too
  * @param language Optional language hint (e.g. "typescript").
  */
 export async function reviewCode(code: string, language?: string): Promise<Review> {
-  const { output } = await codeReviewerAgent.generate({
+  const { output } = await getCodeReviewerAgent().generate({
     prompt: buildReviewPrompt(code, language),
   });
 

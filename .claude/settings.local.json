@@ -46,7 +46,11 @@
       "Bash(NODE_OPTIONS=\"--use-system-ca\" npm test)",
       "Bash(NODE_OPTIONS=\"--use-system-ca\" node _check_cleanup.mjs)",
       "Bash(Set-Clipboard *)",
-      "Bash(echo \"EMPTY:$?\")"
+      "Bash(echo \"EMPTY:$?\")",
+      "Bash(git -C \"C:/data/_10xdev/room_pilot\" add context/domain/03-anti-corruption-layer.md)",
+      "Bash(git -C \"C:/data/_10xdev/room_pilot\" status)",
+      "Bash(git *)",
+      "PowerShell(git *)"
     ],
     "deny": [
       "Bash(rm -rf *)"

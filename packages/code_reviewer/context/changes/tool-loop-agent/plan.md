@@ -504,32 +504,32 @@ re-run the review with a real input instead.
 
 #### Automated
 
-- [x] 2.1 Type checking passes: `npm run typecheck`
-- [x] 2.2 Build passes: `npm run build`
-- [x] 2.3 Smoke test runs and prints a `Review` JSON: `npm start`
-- [x] 2.4 No remaining `generateText` import in `src/index.ts`
+- [x] 2.1 Type checking passes: `npm run typecheck` — 01a4e2a
+- [x] 2.2 Build passes: `npm run build` — 01a4e2a
+- [x] 2.3 Smoke test runs and prints a `Review` JSON: `npm start` — 01a4e2a
+- [x] 2.4 No remaining `generateText` import in `src/index.ts` — 01a4e2a
 
 #### Manual
 
-- [x] 2.5 `npm start` review equivalent in shape/quality to pre-refactor
-- [x] 2.6 Public export surface resolves against built `dist/`
-- [x] 2.7 Shared `codeReviewerAgent` instance reused across `reviewCode()` calls
+- [x] 2.5 `npm start` review equivalent in shape/quality to pre-refactor — 01a4e2a
+- [x] 2.6 Public export surface resolves against built `dist/` — 01a4e2a
+- [x] 2.7 Shared `codeReviewerAgent` instance reused across `reviewCode()` calls — 01a4e2a
 
 ### Phase 3: Public Surface & CLI
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npm run typecheck`
-- [ ] 3.2 Build passes: `npm run build`
-- [ ] 3.3 No `main()` / entry guard / `node:url` import remains in `src/index.ts`
-- [ ] 3.4 `npm start -- src/index.ts` prints a human-readable report
-- [ ] 3.5 `npm start -- --json src/index.ts` prints valid `Review` JSON
-- [ ] 3.6 Stdin path produces a report (`Get-Content … | npm start -- --language typescript`)
+- [x] 3.1 Type checking passes: `npm run typecheck`
+- [x] 3.2 Build passes: `npm run build`
+- [x] 3.3 No `main()` / entry guard / `node:url` import remains in `src/index.ts`
+- [x] 3.4 `npm start -- src/index.ts` prints a human-readable report
+- [x] 3.5 `npm start -- --json src/index.ts` prints valid `Review` JSON
+- [x] 3.6 Stdin path produces a report (`Get-Content … | npm start -- --language typescript`)
 
 #### Manual
 
-- [ ] 3.7 Default output readable; `--json` gives raw object
-- [ ] 3.8 `--language` override beats extension inference; unknown ext / bare stdin works
-- [ ] 3.9 Error paths exit non-zero with clear message; successful review exits `0`
-- [ ] 3.10 No-arg `npm start` on a TTY prints usage and exits `0`
-- [ ] 3.11 Importing the package triggers no review (barrel side-effect-free)
+- [x] 3.7 Default output readable; `--json` gives raw object
+- [x] 3.8 `--language` override beats extension inference; unknown ext / bare stdin works
+- [x] 3.9 Error paths exit non-zero with clear message; successful review exits `0`
+- [x] 3.10 No-arg `npm start` on a TTY prints usage and exits `0`
+- [x] 3.11 Importing the package triggers no review (barrel side-effect-free)
