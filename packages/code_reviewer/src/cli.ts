@@ -1,7 +1,7 @@
-import { pathToFileURL } from 'node:url';
-import { readFile } from 'node:fs/promises';
-import { extname } from 'node:path';
-import { reviewCode, type Review } from './index.js';
+import { pathToFileURL } from "node:url";
+import { readFile } from "node:fs/promises";
+import { extname } from "node:path";
+import { reviewCode, type Review } from "./index.js";
 
 /**
  * CLI entrypoint for the code reviewer. Reviews a file path argument or piped
@@ -22,17 +22,17 @@ interface CliOptions {
 
 /** Maps a file extension (without dot) to a language hint for the prompt. */
 const EXT_TO_LANGUAGE: Record<string, string> = {
-  ts: 'typescript',
-  tsx: 'typescript',
-  js: 'javascript',
-  mjs: 'javascript',
-  cjs: 'javascript',
-  jsx: 'javascript',
-  py: 'python',
-  go: 'go',
-  rs: 'rust',
-  java: 'java',
-  rb: 'ruby',
+  ts: "typescript",
+  tsx: "typescript",
+  js: "javascript",
+  mjs: "javascript",
+  cjs: "javascript",
+  jsx: "javascript",
+  py: "python",
+  go: "go",
+  rs: "rust",
+  java: "java",
+  rb: "ruby",
 };
 
 /** Parses `process.argv.slice(2)` with zero-dep manual parsing. */
@@ -43,17 +43,17 @@ function parseArgs(argv: string[]): CliOptions {
     const arg = argv[i];
     if (arg === undefined) continue;
 
-    if (arg === '--json') {
+    if (arg === "--json") {
       options.json = true;
-    } else if (arg === '-h' || arg === '--help') {
+    } else if (arg === "-h" || arg === "--help") {
       options.help = true;
-    } else if (arg === '--language') {
+    } else if (arg === "--language") {
       // `--language <lang>`: consume the next token as the value.
       options.language = argv[i + 1];
       i++;
-    } else if (arg.startsWith('--language=')) {
-      options.language = arg.slice('--language='.length);
-    } else if (!arg.startsWith('-') && options.filePath === undefined) {
+    } else if (arg.startsWith("--language=")) {
+      options.language = arg.slice("--language=".length);
+    } else if (!arg.startsWith("-") && options.filePath === undefined) {
       // First non-flag token is the input file path.
       options.filePath = arg;
     }
@@ -66,36 +66,36 @@ function parseArgs(argv: string[]): CliOptions {
 function printUsage(): void {
   console.log(
     [
-      'Usage: code-reviewer [options] [file]',
-      '',
-      'Reviews a code file (or piped stdin) and prints a report.',
-      '',
-      'Arguments:',
-      '  file                 Path to the file to review. If omitted, reads stdin.',
-      '',
-      'Options:',
-      '  --json               Print the raw Review object as JSON.',
-      '  --language <lang>    Language hint (overrides extension inference).',
-      '  -h, --help           Show this help.',
-      '',
-      'Examples:',
-      '  code-reviewer src/index.ts',
-      '  code-reviewer --json src/index.ts',
-      '  cat foo.py | code-reviewer --language python',
-    ].join('\n'),
+      "Usage: code-reviewer [options] [file]",
+      "",
+      "Reviews a code file (or piped stdin) and prints a report.",
+      "",
+      "Arguments:",
+      "  file                 Path to the file to review. If omitted, reads stdin.",
+      "",
+      "Options:",
+      "  --json               Print the raw Review object as JSON.",
+      "  --language <lang>    Language hint (overrides extension inference).",
+      "  -h, --help           Show this help.",
+      "",
+      "Examples:",
+      "  code-reviewer src/index.ts",
+      "  code-reviewer --json src/index.ts",
+      "  cat foo.py | code-reviewer --language python",
+    ].join("\n"),
   );
 }
 
 /** Reads the review input from a file path, or from piped stdin. */
 async function readInput(filePath?: string): Promise<string> {
-  if (filePath) return readFile(filePath, 'utf8');
+  if (filePath) return readFile(filePath, "utf8");
 
   if (process.stdin.isTTY) {
     printUsage();
     process.exit(0);
   }
 
-  let data = '';
+  let data = "";
   for await (const chunk of process.stdin) data += chunk;
   return data;
 }
@@ -109,22 +109,22 @@ function inferLanguage(filePath?: string): string | undefined {
 
 /** Renders a `Review` as a human-readable report. Pure (model-free, testable). */
 export function formatReview(review: Review): string {
-  const lines: string[] = [review.summary, ''];
+  const lines: string[] = [review.summary, ""];
 
   if (review.findings.length === 0) {
-    lines.push('No findings.');
-    return lines.join('\n');
+    lines.push("No findings.");
+    return lines.join("\n");
   }
 
   for (const finding of review.findings) {
-    const location = finding.line === null ? '' : ` L${finding.line}:`;
+    const location = finding.line === null ? "" : ` L${finding.line}:`;
     lines.push(`[${finding.severity}]${location} ${finding.message}`);
     if (finding.suggestion) {
       lines.push(`  → ${finding.suggestion}`);
     }
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 async function main(): Promise<void> {
@@ -136,8 +136,8 @@ async function main(): Promise<void> {
   }
 
   const code = await readInput(options.filePath);
-  if (code.trim() === '') {
-    throw new Error('No code to review: input was empty.');
+  if (code.trim() === "") {
+    throw new Error("No code to review: input was empty.");
   }
 
   const language = options.language ?? inferLanguage(options.filePath);

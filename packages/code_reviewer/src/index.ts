@@ -11,7 +11,7 @@
  * lazily on the first `reviewCode()` / `getCodeReviewerAgent()` call. The
  * runnable entrypoint lives in `cli.ts`.
  */
-export { getCodeReviewerAgent, reviewCode } from './agents/code-reviewer.js';
-export { getModel, DEFAULT_MODEL } from './model.js';
-export { findingSchema, reviewSchema } from './schemas/review.js';
-export type { Finding, Review } from './schemas/review.js';
+export { getCodeReviewerAgent, reviewCode } from "./agents/code-reviewer.js";
+export { getModel, DEFAULT_MODEL } from "./model.js";
+export { findingSchema, reviewSchema } from "./schemas/review.js";
+export type { Finding, Review } from "./schemas/review.js";

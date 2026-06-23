@@ -1,8 +1,8 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 /** Schema for a single review finding. */
 export const findingSchema = z.object({
-  severity: z.enum(['info', 'minor', 'major', 'critical']),
+  severity: z.enum(["info", "minor", "major", "critical"]),
   line: z.number().int().positive().nullable(),
   message: z.string(),
   suggestion: z.string().nullable(),

@@ -1,7 +1,7 @@
-import { ToolLoopAgent, Output } from 'ai';
-import { getModel } from '../model.js';
-import { reviewInstructions, buildReviewPrompt } from '../prompts/review.js';
-import { reviewSchema, type Review } from '../schemas/review.js';
+import { ToolLoopAgent, Output } from "ai";
+import { getModel } from "../model.js";
+import { reviewInstructions, buildReviewPrompt } from "../prompts/review.js";
+import { reviewSchema, type Review } from "../schemas/review.js";
 
 /**
  * The structured-output spec the agent carries. Naming it explicitly (the AI SDK
