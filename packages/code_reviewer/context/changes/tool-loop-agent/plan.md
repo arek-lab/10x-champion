@@ -519,17 +519,17 @@ re-run the review with a real input instead.
 
 #### Automated
 
-- [x] 3.1 Type checking passes: `npm run typecheck`
-- [x] 3.2 Build passes: `npm run build`
-- [x] 3.3 No `main()` / entry guard / `node:url` import remains in `src/index.ts`
-- [x] 3.4 `npm start -- src/index.ts` prints a human-readable report
-- [x] 3.5 `npm start -- --json src/index.ts` prints valid `Review` JSON
-- [x] 3.6 Stdin path produces a report (`Get-Content … | npm start -- --language typescript`)
+- [x] 3.1 Type checking passes: `npm run typecheck` — 9b8f1c5
+- [x] 3.2 Build passes: `npm run build` — 9b8f1c5
+- [x] 3.3 No `main()` / entry guard / `node:url` import remains in `src/index.ts` — 9b8f1c5
+- [x] 3.4 `npm start -- src/index.ts` prints a human-readable report — 9b8f1c5
+- [x] 3.5 `npm start -- --json src/index.ts` prints valid `Review` JSON — 9b8f1c5
+- [x] 3.6 Stdin path produces a report (`Get-Content … | npm start -- --language typescript`) — 9b8f1c5
 
 #### Manual
 
-- [x] 3.7 Default output readable; `--json` gives raw object
-- [x] 3.8 `--language` override beats extension inference; unknown ext / bare stdin works
-- [x] 3.9 Error paths exit non-zero with clear message; successful review exits `0`
-- [x] 3.10 No-arg `npm start` on a TTY prints usage and exits `0`
-- [x] 3.11 Importing the package triggers no review (barrel side-effect-free)
+- [x] 3.7 Default output readable; `--json` gives raw object — 9b8f1c5
+- [x] 3.8 `--language` override beats extension inference; unknown ext / bare stdin works — 9b8f1c5
+- [x] 3.9 Error paths exit non-zero with clear message; successful review exits `0` — 9b8f1c5
+- [x] 3.10 No-arg `npm start` on a TTY prints usage and exits `0` — 9b8f1c5
+- [x] 3.11 Importing the package triggers no review (barrel side-effect-free) — 9b8f1c5
