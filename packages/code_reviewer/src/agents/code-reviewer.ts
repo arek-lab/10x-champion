@@ -1,6 +1,11 @@
 import { ToolLoopAgent, Output } from "ai";
 import { getModel } from "../model.js";
-import { reviewInstructions, buildReviewPrompt } from "../prompts/review.js";
+import {
+  reviewInstructions,
+  buildReviewPrompt,
+  buildPullRequestPrompt,
+  type PullRequestInput,
+} from "../prompts/review.js";
 import { reviewSchema, type Review } from "../schemas/review.js";
 
 /**
@@ -46,4 +51,23 @@ export async function reviewCode(code: string, language?: string): Promise<Revie
   });
 
   return output;
+}
+
+/**
+ * Reviews a pull request (title + body + unified diff) and returns the
+ * structured verdict used as the CI merge gate.
+ *
+ * The model's `verdict` is hardened deterministically: a PR fails if the overall
+ * `score` is ≤ 4 or any `critical` finding is present, so the gate never depends
+ * on the model remembering to flip the flag.
+ */
+export async function reviewPullRequest(input: PullRequestInput): Promise<Review> {
+  const { output } = await getCodeReviewerAgent().generate({
+    prompt: buildPullRequestPrompt(input),
+  });
+
+  const failed =
+    output.verdict === "fail" || output.score <= 4 || output.findings.some((f) => f.severity === "critical");
+
+  return { ...output, verdict: failed ? "fail" : "pass" };
 }

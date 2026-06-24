@@ -1,9 +1,15 @@
 name: AI Code Review
 
+# NOTE: the repo's default branch is `main` (the goal text's "master" predates the
+# master->main rename — see commit "Fix workflow trigger branch: master -> main").
 on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   review:
@@ -14,5 +20,79 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Hello world step
-        run: echo "Pipeline działa! 🎉"
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Compute diff against base branch
+        id: diff
+        run: |
+          base="${{ github.base_ref }}"
+          if [ -z "$base" ]; then base="main"; fi
+          git fetch --no-tags origin "$base" >/dev/null 2>&1 || true
+          {
+            echo 'value<<DIFF_EOF'
+            git diff "origin/$base...HEAD"
+            echo 'DIFF_EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Run AI reviewer
+        id: ai
+        uses: ./.github/actions/ai-reviewer
+        with:
+          api-key: ${{ secrets.LLM_PROVIDER_API_KEY }}
+          pr-title: ${{ github.event.pull_request.title }}
+          pr-body: ${{ github.event.pull_request.body }}
+          diff: ${{ steps.diff.outputs.value }}
+
+      - name: Comment verdict on PR
+        if: ${{ always() && github.event_name == 'pull_request' && steps.ai.outputs.verdict != '' }}
+        uses: actions/github-script@v7
+        env:
+          VERDICT_JSON: ${{ steps.ai.outputs.verdict }}
+        with:
+          script: |
+            const review = JSON.parse(process.env.VERDICT_JSON);
+            const passed = review.verdict === "pass";
+            const emoji = passed ? "✅" : "❌";
+            const rows = Object.entries(review.scores)
+              .map(([name, c]) => `| ${name} | ${c.score}/10 | ${c.comment} |`)
+              .join("\n");
+            const body = [
+              `## ${emoji} AI Code Review — ${review.verdict.toUpperCase()} (overall ${review.score}/10)`,
+              "",
+              review.summary,
+              "",
+              "| Criterion | Score | Notes |",
+              "| --- | --- | --- |",
+              rows,
+            ].join("\n");
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+            const add = passed ? "ai-cr:passed" : "ai-cr:failed";
+            const remove = passed ? "ai-cr:failed" : "ai-cr:passed";
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [add],
+            });
+            await github.rest.issues
+              .removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                name: remove,
+              })
+              .catch(() => {});
+
+            if (!passed) {
+              core.setFailed(`AI review failed with overall score ${review.score}/10`);
+            }
