@@ -6,6 +6,12 @@
 # evidence screenshot), and expose it as the composite action's `verdict` output.
 set -euo pipefail
 
+# actions/setup-node exports NODE_OPTIONS=--use-system-ca, which Node 22.14
+# rejects inside NODE_OPTIONS (it is only valid as a CLI flag). Left set, it
+# breaks esbuild's postinstall (a fresh `node install.js`) and tsx. Neutralize
+# it for this script.
+unset NODE_OPTIONS
+
 cd "$GITHUB_WORKSPACE/packages/code_reviewer"
 
 echo "Installing reviewer dependencies..." >&2
