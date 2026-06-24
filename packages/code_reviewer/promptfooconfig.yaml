@@ -1,0 +1,93 @@
+# Regression gate for the code-reviewer prompt.
+#
+# Compares three free OpenRouter models that support json_schema structured
+# outputs on a deliberately broken diff. Run before changing the prompt/schema:
+#
+#   OPENROUTER_API_KEY=... npx promptfoo eval
+#
+# The broken fixture has clear flaws (SQL injection + ignored Supabase error),
+# so every model must return schema-valid JSON, correctly call out the flaws,
+# and produce an overall score <= 4 (i.e. a failing review).
+
+description: "Code reviewer regression gate — a broken diff must score <= 4 and fail."
+
+prompts:
+  - |
+    You are a senior code reviewer for an Astro 6 SSR + React 19 + Supabase +
+    Cloudflare Workers codebase. Review the pull request diff below.
+
+    Score each criterion from 1 (worst) to 10 (best): correctness, security,
+    conventions, readability, testing. Then give an overall integer `score`
+    (1-10) and a `verdict`: "fail" if the overall score is 4 or below or any
+    finding is "critical", otherwise "pass".
+
+    Respond with ONLY a JSON object of exactly this shape (no prose, no fences):
+    {
+      "scores": {
+        "correctness": { "score": <1-10>, "comment": "<text>" },
+        "security":    { "score": <1-10>, "comment": "<text>" },
+        "conventions": { "score": <1-10>, "comment": "<text>" },
+        "readability": { "score": <1-10>, "comment": "<text>" },
+        "testing":     { "score": <1-10>, "comment": "<text>" }
+      },
+      "score": <1-10>,
+      "verdict": "pass" | "fail",
+      "summary": "<a few actionable sentences>",
+      "findings": [
+        { "severity": "info|minor|major|critical", "line": <int|null>, "message": "<text>", "suggestion": "<text|null>" }
+      ]
+    }
+
+    Unified diff:
+    ```diff
+    {{diff}}
+    ```
+
+# Three free OpenRouter models that advertise json_schema structured outputs.
+# `delay: 2000` throttles requests to stay under free-tier rate limits.
+providers:
+  - id: openrouter:google/gemma-4-27b-it:free
+    config:
+      response_format: { type: json_object }
+    delay: 2000
+  - id: openrouter:openai/gpt-oss-20b:free
+    config:
+      response_format: { type: json_object }
+    delay: 2000
+  - id: openrouter:google/gemini-flash-1.5:free
+    config:
+      response_format: { type: json_object }
+    delay: 2000
+
+# Assertions that apply to every test/provider.
+defaultTest:
+  assert:
+    # 1. Valid JSON matching the review schema's required shape.
+    - type: is-json
+      value:
+        type: object
+        required: [scores, score, verdict, summary, findings]
+        properties:
+          score: { type: integer, minimum: 1, maximum: 10 }
+          verdict: { type: string, enum: [pass, fail] }
+          scores:
+            type: object
+            required: [correctness, security, conventions, readability, testing]
+    # 3. Hard gate: the broken diff must score <= 4.
+    - type: javascript
+      value: "JSON.parse(output).score <= 4"
+
+tests:
+  - description: "Broken diff (SQL injection + ignored error) must be caught and fail"
+    vars:
+      diff: file://fixtures/broken.diff
+    assert:
+      # 2. A second model judges whether the review names the real flaws.
+      - type: llm-rubric
+        provider: openrouter:openai/gpt-oss-20b:free
+        value: >
+          The review must identify BOTH flaws: (a) the SQL injection — raw user
+          input (the `id` path param) is interpolated directly into a SQL string;
+          and (b) the missing error handling — the Supabase error is ignored and
+          `data` is dereferenced without a null/empty check. The security score
+          must be low (<= 3).

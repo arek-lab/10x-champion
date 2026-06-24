@@ -1,0 +1,27 @@
+diff --git a/src/pages/api/users/[id].ts b/src/pages/api/users/[id].ts
+new file mode 100644
+index 0000000..a1b2c3d
+--- /dev/null
++++ b/src/pages/api/users/[id].ts
+@@ -0,0 +1,21 @@
++import type { APIRoute } from "astro";
++import { createClient } from "@supabase/supabase-js";
++
++// Service-role client created at module scope and used for every request.
++const supabase = createClient(
++  import.meta.env.SUPABASE_URL,
++  import.meta.env.SUPABASE_SERVICE_ROLE_KEY,
++);
++
++export const GET: APIRoute = async ({ params }) => {
++  const id = params.id;
++
++  // Look up the profile by interpolating the raw path param into raw SQL.
++  const { data } = await supabase.rpc("exec_sql", {
++    sql: `select * from profiles where id = '${id}'`,
++  });
++
++  return new Response(JSON.stringify(data[0]), {
++    headers: { "content-type": "application/json" },
++  });
++};

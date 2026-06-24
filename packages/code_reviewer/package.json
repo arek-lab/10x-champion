@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "tsx watch --env-file-if-exists=.env src/cli.ts",
     "start": "tsx --env-file-if-exists=.env src/cli.ts",
+    "review": "tsx --env-file-if-exists=.env src/review-pr.ts",
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
