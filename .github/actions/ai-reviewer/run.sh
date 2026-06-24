@@ -6,11 +6,13 @@
 # evidence screenshot), and expose it as the composite action's `verdict` output.
 set -euo pipefail
 
-# actions/setup-node exports NODE_OPTIONS=--use-system-ca, which Node 22.14
-# rejects inside NODE_OPTIONS (it is only valid as a CLI flag). Left set, it
-# breaks esbuild's postinstall (a fresh `node install.js`) and tsx. Neutralize
-# it for this script.
+# The repo .npmrc sets `node-options=--use-system-ca`; npm injects that as
+# NODE_OPTIONS into every lifecycle script (e.g. esbuild's postinstall). Node
+# 22.14 rejects --use-system-ca *inside* NODE_OPTIONS (it is only valid as a CLI
+# flag), so `npm ci` fails with exit code 9. Neutralize both the env var and the
+# npm config (env overrides .npmrc) for this script — CI doesn't need it.
 unset NODE_OPTIONS
+export npm_config_node_options=""
 
 cd "$GITHUB_WORKSPACE/packages/code_reviewer"
 
